@@ -56,11 +56,13 @@ function Index() {
     <div className="mx-auto max-w-4xl px-6 py-16 lg:py-24">
       <div className="label-mono text-primary">// uid=0(root) — session active</div>
 
-      <h1 className="headline mt-6 text-[16vw] leading-[0.82] sm:text-[9rem]">
-        <span className="block">I</span>
-        <VerbCycle />
+      <h1 className="headline mt-6 text-[15vw] leading-[0.82] sm:text-[8.5rem]">
+        <span className="block">
+          I <VerbCycle />
+        </span>
         <span className="block">networks</span>
       </h1>
+
 
       <p className="quote-serif mt-8 max-w-xl text-2xl text-foreground">
         &ldquo;Break it in a lab, so nobody breaks it in production.&rdquo;
