@@ -15,7 +15,7 @@ DOSSIER
 - Name: ${profile.name} (handle: ${profile.handle})
 - Role: ${profile.role}
 - Location: ${profile.address}
-- Email: ${profile.email} | Phone: ${profile.phone} | LinkedIn: ${profile.linkedin}
+- Email: ${profile.email} | Phone: ${profile.phone} | LinkedIn: ${profile.linkedin} | GitHub: ${profile.github}
 - Bio: ${profile.bio}
 - Education: ${profile.education.map((e) => `${e.degree}, ${e.school} (${e.period}) — ${e.note}`).join("; ")}
 - Skills: ${profile.skills.join(", ")}
