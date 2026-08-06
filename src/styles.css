@@ -159,3 +159,16 @@
     transition-duration: 0.001ms !important;
   }
 }
+
+@utility caret-term {
+  &::after {
+    content: "";
+    display: inline-block;
+    width: 0.55em;
+    height: 1.05em;
+    margin-left: 0.15em;
+    vertical-align: -0.15em;
+    background-color: var(--color-terminal-accent);
+    animation: caret-blink 1s steps(1, end) infinite;
+  }
+}
