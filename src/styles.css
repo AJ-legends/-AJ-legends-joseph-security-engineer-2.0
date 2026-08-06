@@ -5,18 +5,18 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * Design system — terminal / web3 hacker aesthetic.
- * Solid colours only: ink black, surface, terminal green, bone text.
+ * Design system — warm off-white paper with deep forest-green accent.
+ * Solid colours only, soft hairline borders, gentle rounding.
  */
 
 @theme inline {
-  --radius-sm: 0px;
-  --radius-md: 0px;
-  --radius-lg: 0px;
-  --radius-xl: 2px;
-  --radius-2xl: 2px;
-  --radius-3xl: 2px;
-  --radius-4xl: 2px;
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
+  --radius-xl: 14px;
+  --radius-2xl: 18px;
+  --radius-3xl: 22px;
+  --radius-4xl: 26px;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -39,8 +39,11 @@
   --color-ring: var(--ring);
   --color-ring-offset-background: var(--background);
   --color-surface: var(--surface);
-  --color-grid: var(--grid);
   --color-warn: var(--warn);
+  --color-terminal: var(--terminal);
+  --color-terminal-foreground: var(--terminal-foreground);
+  --color-terminal-muted: var(--terminal-muted);
+  --color-terminal-accent: var(--terminal-accent);
 
   --font-display: "Big Shoulders Display", "Arial Narrow", sans-serif;
   --font-serif: "Fraunces", Georgia, serif;
@@ -49,36 +52,35 @@
 }
 
 :root {
-  --radius: 0px;
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.92 0 0);
-  --surface: oklch(0.2 0 0);
-  --card: oklch(0.2 0 0);
-  --card-foreground: oklch(0.92 0 0);
-  --popover: oklch(0.2 0 0);
-  --popover-foreground: oklch(0.92 0 0);
-  --primary: oklch(0.87 0.24 152);
-  --primary-foreground: oklch(0.145 0 0);
-  --secondary: oklch(0.24 0 0);
-  --secondary-foreground: oklch(0.92 0 0);
-  --muted: oklch(0.24 0 0);
-  --muted-foreground: oklch(0.62 0 0);
-  --accent: oklch(0.87 0.24 152);
-  --accent-foreground: oklch(0.145 0 0);
-  --destructive: oklch(0.62 0.24 27);
-  --destructive-foreground: oklch(0.97 0 0);
-  --warn: oklch(0.82 0.17 85);
-  --border: oklch(0.3 0 0);
-  --border-strong: oklch(0.42 0 0);
-  --input: oklch(0.3 0 0);
-  --ring: oklch(0.87 0.24 152);
-  --grid: oklch(0.24 0 0);
+  --radius: 10px;
+  --background: #fafaf8;
+  --foreground: #1a1a1a;
+  --surface: #f1f1ec;
+  --card: #ffffff;
+  --card-foreground: #1a1a1a;
+  --popover: #ffffff;
+  --popover-foreground: #1a1a1a;
+  --primary: #2d6a4f;
+  --primary-foreground: #fafaf8;
+  --secondary: #d8f3dc;
+  --secondary-foreground: #1b4332;
+  --muted: #eeeee8;
+  --muted-foreground: #6f6f68;
+  --accent: #d8f3dc;
+  --accent-foreground: #1b4332;
+  --destructive: #b3261e;
+  --destructive-foreground: #fafaf8;
+  --warn: #9a6700;
+  --border: #e3e3dc;
+  --border-strong: #c9c9c0;
+  --input: #e3e3dc;
+  --ring: #2d6a4f;
+  --terminal: #161a18;
+  --terminal-foreground: #e4e6e2;
+  --terminal-muted: #8b938d;
+  --terminal-accent: #6ee7a8;
 }
 
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.92 0 0);
-}
 
 @layer base {
   * {
