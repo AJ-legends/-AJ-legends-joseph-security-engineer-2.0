@@ -26,7 +26,7 @@ function Bar({ pct }: { pct: number }) {
   return (
     <span>
       {"█".repeat(filled)}
-      <span className="text-muted-foreground">{"░".repeat(24 - filled)}</span>{" "}
+      <span className="text-terminal-muted">{"░".repeat(24 - filled)}</span>{" "}
       {String(pct).padStart(3, " ")}%
     </span>
   );
@@ -80,21 +80,21 @@ export function BootSequence({ onDone }: { onDone: () => void }) {
 
   return (
     <div
-      className={`fixed inset-0 z-[100] bg-background transition-opacity duration-300 ${
+      className={`fixed inset-0 z-[100] bg-terminal transition-opacity duration-300 ${
         leaving ? "opacity-0" : "opacity-100"
       }`}
     >
       <button
         onClick={finish}
-        className="absolute right-4 top-4 z-10 border border-border px-3 py-1.5 text-[11px] uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:border-primary hover:text-primary"
+        className="absolute right-4 top-4 z-10 rounded-[8px] border border-terminal-muted/50 px-3 py-1.5 text-[11px] uppercase tracking-[0.18em] text-terminal-muted transition-colors hover:border-terminal-accent hover:text-terminal-accent"
       >
         skip [esc]
       </button>
 
       <div className="flex h-full w-full items-center justify-center p-6">
         <div className="w-full max-w-2xl font-mono text-[13px] leading-relaxed sm:text-sm">
-          <div className="mb-4 flex items-center gap-2 border-b border-border pb-3 text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
-            <span className="inline-block size-2 bg-primary" />
+          <div className="mb-4 flex items-center gap-2 border-b border-terminal-muted/30 pb-3 text-[11px] uppercase tracking-[0.18em] text-terminal-muted">
+            <span className="inline-block size-2 rounded-full bg-terminal-accent" />
             reverse shell — session 01
           </div>
 
@@ -102,16 +102,16 @@ export function BootSequence({ onDone }: { onDone: () => void }) {
             const isLast = i === visible.length - 1;
             const tone =
               line.tone === "ok"
-                ? "text-primary"
+                ? "text-terminal-accent"
                 : line.tone === "grant"
-                  ? "text-primary"
+                  ? "text-terminal-accent"
                   : line.tone === "warn"
                     ? "text-warn"
-                    : "text-muted-foreground";
+                    : "text-terminal-muted";
 
             if (line.progress) {
               return (
-                <div key={i} className="whitespace-pre text-muted-foreground">
+                <div key={i} className="whitespace-pre text-terminal-muted">
                   {line.text} <Bar pct={pct} />
                 </div>
               );
@@ -121,7 +121,7 @@ export function BootSequence({ onDone }: { onDone: () => void }) {
               return (
                 <div
                   key={i}
-                  className="mt-4 inline-block bg-primary px-3 py-1 font-mono text-sm font-bold tracking-[0.2em] text-primary-foreground"
+                  className="mt-4 inline-block rounded-[6px] bg-terminal-accent px-3 py-1 font-mono text-sm font-bold tracking-[0.2em] text-terminal"
                 >
                   {line.text}
                 </div>
@@ -129,7 +129,7 @@ export function BootSequence({ onDone }: { onDone: () => void }) {
             }
 
             return (
-              <div key={i} className={`${tone} ${isLast ? "caret" : ""}`}>
+              <div key={i} className={`${tone} ${isLast ? "caret-term" : ""}`}>
                 {line.text}
               </div>
             );

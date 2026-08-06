@@ -12,8 +12,8 @@ import { useEffect, useState, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { BootSequence, shouldPlayBoot } from "@/components/BootSequence";
-import { GridLines } from "@/components/GridLines";
 import { Sidebar } from "@/components/Sidebar";
+import { TopNav } from "@/components/TopNav";
 
 function NotFoundComponent() {
   return (
@@ -115,7 +115,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en">
       <head>
         <HeadContent />
       </head>
@@ -139,17 +139,20 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <GridLines />
-      <Sidebar />
-      <main
-        className={`relative z-10 min-h-screen pt-[53px] lg:pl-[280px] lg:pt-0 ${
+      <div
+        className={`min-h-screen ${
           checked && !booting ? "opacity-100" : "opacity-0"
         } transition-opacity duration-500`}
       >
-        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-        <Outlet />
-      </main>
+        <TopNav />
+        <Sidebar />
+        <main className="relative z-10 lg:pl-[300px]">
+          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+          <Outlet />
+        </main>
+      </div>
       {booting && <BootSequence onDone={() => setBooting(false)} />}
     </QueryClientProvider>
   );
 }
+
