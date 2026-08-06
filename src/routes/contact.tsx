@@ -27,6 +27,7 @@ const DETAILS = [
   { label: "email", value: profile.email, href: `mailto:${profile.email}` },
   { label: "phone", value: profile.phone, href: `tel:${profile.phoneHref}` },
   { label: "linkedin", value: "alamu-joseph", href: profile.linkedin },
+  { label: "github", value: "AJ-legends", href: profile.github },
   { label: "based in", value: profile.address },
 ];
 
