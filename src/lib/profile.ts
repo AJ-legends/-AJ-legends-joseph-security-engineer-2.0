@@ -26,6 +26,73 @@ export const profile = {
     "Critical Thinking",
     "Microsoft Office",
   ],
+  skillGroups: [
+    {
+      id: "offensive",
+      label: "Offensive Security",
+      note: "Breaking things in a lab so I understand how they fail.",
+      axes: [
+        { label: "Recon", value: 72 },
+        { label: "Packet Crafting", value: 65 },
+        { label: "Exploit Basics", value: 55 },
+        { label: "Social Eng.", value: 60 },
+        { label: "Tooling", value: 78 },
+        { label: "Reporting", value: 70 },
+      ],
+    },
+    {
+      id: "defensive",
+      label: "Defensive Security",
+      note: "Detection, hardening and incident fundamentals.",
+      axes: [
+        { label: "Log Analysis", value: 74 },
+        { label: "Firewalling", value: 80 },
+        { label: "Detection", value: 66 },
+        { label: "Access Control", value: 70 },
+        { label: "Incident Resp.", value: 62 },
+        { label: "Hardening", value: 68 },
+      ],
+    },
+    {
+      id: "networking",
+      label: "Networking",
+      note: "Reading traffic at the byte level.",
+      axes: [
+        { label: "TCP/IP", value: 82 },
+        { label: "DPI", value: 70 },
+        { label: "Wireshark", value: 76 },
+        { label: "Sockets", value: 78 },
+        { label: "DNS/HTTP", value: 74 },
+        { label: "Routing", value: 60 },
+      ],
+    },
+    {
+      id: "programming",
+      label: "Programming",
+      note: "Python first, automation always.",
+      axes: [
+        { label: "Python", value: 88 },
+        { label: "Scripting", value: 84 },
+        { label: "Automation", value: 80 },
+        { label: "Data Structs", value: 72 },
+        { label: "Git", value: 68 },
+        { label: "Debugging", value: 75 },
+      ],
+    },
+    {
+      id: "foundations",
+      label: "Foundations & Soft Skills",
+      note: "The parts that make the technical parts useful.",
+      axes: [
+        { label: "Critical Think.", value: 86 },
+        { label: "Prompt Eng.", value: 80 },
+        { label: "Documentation", value: 72 },
+        { label: "Communication", value: 78 },
+        { label: "MS Office", value: 74 },
+        { label: "Research", value: 82 },
+      ],
+    },
+  ],
   education: [
     {
       school: "Covenant University",
