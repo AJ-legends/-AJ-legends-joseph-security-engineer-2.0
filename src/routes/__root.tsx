@@ -12,8 +12,8 @@ import { useEffect, useState, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { BootSequence, shouldPlayBoot } from "@/components/BootSequence";
-import { GridLines } from "@/components/GridLines";
 import { Sidebar } from "@/components/Sidebar";
+import { TopNav } from "@/components/TopNav";
 
 function NotFoundComponent() {
   return (
