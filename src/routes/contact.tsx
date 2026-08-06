@@ -35,7 +35,7 @@ function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
 
   const field =
-    "w-full border border-border bg-surface px-3 py-2.5 font-mono text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-primary";
+    "w-full rounded-[10px] border border-border bg-card px-3 py-2.5 font-mono text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-primary";
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -120,7 +120,7 @@ function Contact() {
           </div>
           <button
             type="submit"
-            className="w-full bg-primary px-5 py-3 text-xs uppercase tracking-[0.18em] text-primary-foreground transition-opacity hover:opacity-80"
+            className="w-full rounded-[10px] bg-primary px-5 py-3 text-xs uppercase tracking-[0.18em] text-primary-foreground transition-opacity hover:opacity-80"
           >
             transmit
           </button>

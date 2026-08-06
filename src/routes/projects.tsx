@@ -27,9 +27,9 @@ function Projects() {
     <Page index="03" title="Tooling" kicker="ls ./projects">
       <div className="space-y-8">
         {profile.projects.map((project, i) => (
-          <article key={project.slug} className="border border-border bg-surface">
+          <article key={project.slug} className="overflow-hidden rounded-[18px] border border-border bg-card">
             <header className="flex items-center gap-2 border-b border-border px-4 py-2.5">
-              <span className="inline-block size-2 bg-primary" />
+              <span className="inline-block size-2 rounded-full bg-primary" />
               <span className="truncate font-mono text-[11px] text-muted-foreground">
                 {project.cmd}
               </span>
@@ -46,15 +46,15 @@ function Projects() {
 
               <ul className="mt-4 flex flex-wrap gap-2">
                 {project.tags.map((tag) => (
-                  <li key={tag} className="border border-border px-2 py-1 text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
+                  <li key={tag} className="rounded-full border border-border px-2.5 py-1 text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
                     {tag}
                   </li>
                 ))}
               </ul>
 
-              <pre className="mt-5 overflow-x-auto border border-border bg-background p-4 text-[11px] leading-relaxed text-muted-foreground">
+              <pre className="mt-5 overflow-x-auto rounded-[12px] bg-terminal p-4 text-[11px] leading-relaxed text-terminal-muted">
                 {project.log.map((line) => (
-                  <div key={line} className={line.startsWith("[!]") ? "text-warn" : line.startsWith("[+]") ? "text-primary" : undefined}>
+                  <div key={line} className={line.startsWith("[!]") ? "text-warn" : line.startsWith("[+]") ? "text-terminal-accent" : undefined}>
                     {line}
                   </div>
                 ))}

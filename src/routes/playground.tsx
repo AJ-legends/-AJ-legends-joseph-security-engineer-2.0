@@ -153,12 +153,12 @@ function Playground() {
             disabled={busy}
             placeholder="ask about joseph..."
             aria-label="Ask the terminal a question"
-            className="flex-1 bg-transparent font-mono text-[13px] text-foreground outline-none placeholder:text-muted-foreground disabled:opacity-50"
+            className="flex-1 bg-transparent font-mono text-[13px] text-terminal-foreground outline-none placeholder:text-terminal-muted disabled:opacity-50"
           />
           <button
             type="submit"
             disabled={busy || !input.trim()}
-            className="border border-border px-3 py-1 text-[10px] uppercase tracking-[0.16em] transition-colors hover:border-primary hover:text-primary disabled:opacity-40"
+            className="rounded-[8px] border border-terminal-muted/50 px-3 py-1 text-[10px] uppercase tracking-[0.16em] text-terminal-muted transition-colors hover:border-terminal-accent hover:text-terminal-accent disabled:opacity-40"
           >
             {busy ? "..." : "run"}
           </button>
@@ -171,7 +171,7 @@ function Playground() {
             key={s}
             onClick={() => void send(s)}
             disabled={busy}
-            className="border border-border px-3 py-1.5 text-[11px] text-muted-foreground transition-colors hover:border-primary hover:text-primary disabled:opacity-40"
+            className="rounded-full border border-border px-3 py-1.5 text-[11px] text-muted-foreground transition-colors hover:border-primary hover:text-primary disabled:opacity-40"
           >
             &gt; {s}
           </button>
