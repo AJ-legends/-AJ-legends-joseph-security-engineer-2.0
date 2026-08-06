@@ -106,17 +106,17 @@ function Playground() {
         skills or availability. It won&apos;t answer anything outside that scope.
       </p>
 
-      <div className="mt-8 border border-border bg-surface">
-        <header className="flex items-center gap-2 border-b border-border px-4 py-2.5">
-          <span className="inline-block size-2 bg-primary" />
-          <span className="font-mono text-[11px] text-muted-foreground">
+      <div className="mt-8 overflow-hidden rounded-[16px] border border-border bg-terminal text-terminal-foreground">
+        <header className="flex items-center gap-2 border-b border-terminal-muted/30 px-4 py-2.5">
+          <span className="inline-block size-2 rounded-full bg-terminal-accent" />
+          <span className="font-mono text-[11px] text-terminal-muted">
             sentry@alamu-joseph:~
           </span>
         </header>
 
         <div className="max-h-[420px] min-h-[260px] overflow-y-auto p-4 font-mono text-[13px] leading-relaxed">
           {messages.length === 0 && (
-            <div className="text-muted-foreground">
+            <div className="text-terminal-muted">
               <div>[+] sentry online — dossier loaded</div>
               <div className="mt-1">[*] type a question, or pick one below.</div>
             </div>
@@ -125,10 +125,10 @@ function Playground() {
           {messages.map((m) => (
             <div key={m.id} className="mb-3">
               {m.role === "user" ? (
-                <div className="text-primary">$ {m.text}</div>
+                <div className="text-terminal-accent">$ {m.text}</div>
               ) : (
-                <div className="whitespace-pre-wrap text-foreground">
-                  {m.text || <span className="text-muted-foreground">thinking</span>}
+                <div className="whitespace-pre-wrap text-terminal-foreground">
+                  {m.text || <span className="text-terminal-muted">thinking</span>}
                 </div>
               )}
             </div>
@@ -143,9 +143,9 @@ function Playground() {
             e.preventDefault();
             void send(input);
           }}
-          className="flex items-center gap-2 border-t border-border px-4 py-3"
+          className="flex items-center gap-2 border-t border-terminal-muted/30 px-4 py-3"
         >
-          <span className="text-primary">$</span>
+          <span className="text-terminal-accent">$</span>
           <input
             ref={inputRef}
             value={input}
