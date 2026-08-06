@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Check, Copy, Linkedin, Mail, MapPin, Phone } from "lucide-react";
+import { Check, Copy, Github, Linkedin, Mail, MapPin, Phone } from "lucide-react";
 
 import avatar from "@/assets/hacker-avatar.png";
 import { profile } from "@/lib/profile";
@@ -97,6 +97,15 @@ export function ProfileCard() {
           className="flex size-9 items-center justify-center rounded-[10px] border border-border text-muted-foreground transition-colors hover:border-primary hover:text-primary"
         >
           <Linkedin className="size-4" />
+        </a>
+        <a
+          href={profile.github}
+          target="_blank"
+          rel="noreferrer"
+          aria-label="GitHub"
+          className="flex size-9 items-center justify-center rounded-[10px] border border-border text-muted-foreground transition-colors hover:border-primary hover:text-primary"
+        >
+          <Github className="size-4" />
         </a>
       </div>
     </div>

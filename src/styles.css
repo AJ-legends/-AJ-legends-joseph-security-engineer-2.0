@@ -60,25 +60,25 @@
   --card-foreground: #1a1a1a;
   --popover: #ffffff;
   --popover-foreground: #1a1a1a;
-  --primary: #2d6a4f;
+  --primary: #141414;
   --primary-foreground: #fafaf8;
-  --secondary: #d8f3dc;
-  --secondary-foreground: #1b4332;
+  --secondary: #ebebe5;
+  --secondary-foreground: #141414;
   --muted: #eeeee8;
   --muted-foreground: #6f6f68;
-  --accent: #d8f3dc;
-  --accent-foreground: #1b4332;
+  --accent: #ebebe5;
+  --accent-foreground: #141414;
   --destructive: #b3261e;
   --destructive-foreground: #fafaf8;
-  --warn: #9a6700;
+  --warn: #8a7a45;
   --border: #e3e3dc;
   --border-strong: #c9c9c0;
   --input: #e3e3dc;
-  --ring: #2d6a4f;
-  --terminal: #161a18;
-  --terminal-foreground: #e4e6e2;
-  --terminal-muted: #8b938d;
-  --terminal-accent: #6ee7a8;
+  --ring: #141414;
+  --terminal: #0d0d0c;
+  --terminal-foreground: #ededea;
+  --terminal-muted: #85857e;
+  --terminal-accent: #fafaf8;
 }
 
 

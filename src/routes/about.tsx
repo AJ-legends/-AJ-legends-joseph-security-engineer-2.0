@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { Page } from "@/components/Page";
+import { SkillsRadar } from "@/components/SkillsRadar";
 import { profile } from "@/lib/profile";
 
 export const Route = createFileRoute("/about")({
@@ -65,17 +66,9 @@ function About() {
 
       <section className="mt-16">
         <h2 className="label-mono mb-4 text-primary">// skills</h2>
-        <ul className="flex flex-wrap gap-2">
-          {profile.skills.map((skill) => (
-            <li
-              key={skill}
-              className="border border-border px-3 py-1.5 text-xs text-muted-foreground transition-colors hover:border-primary hover:text-primary"
-            >
-              {skill}
-            </li>
-          ))}
-        </ul>
+        <SkillsRadar />
       </section>
+
     </Page>
   );
 }
