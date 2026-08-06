@@ -8,6 +8,7 @@ export const profile = {
   phone: "+234 814 918 9165",
   phoneHref: "+2348149189165",
   linkedin: "https://www.linkedin.com/in/alamu-joseph",
+  github: "https://github.com/AJ-legends",
   bio: "Computer Science undergraduate with a growing interest in cybersecurity and Python development. I build small offensive and defensive tooling to understand how networks break, and how to keep them from breaking.",
   verbs: ["ATTACK", "DEFEND", "AUTOMATE"],
   stats: [
