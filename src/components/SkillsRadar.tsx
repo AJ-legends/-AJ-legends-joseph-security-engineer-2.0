@@ -6,7 +6,7 @@ type Axis = { label: string; value: number };
 
 const SIZE = 260;
 const CENTER = SIZE / 2;
-const RADIUS = 88;
+const RADIUS = 70;
 
 function point(i: number, total: number, r: number) {
   const angle = (Math.PI * 2 * i) / total - Math.PI / 2;
@@ -76,7 +76,7 @@ function RadarChart({ axes }: { axes: Axis[] }) {
       })}
 
       {axes.map((a, i) => {
-        const [x, y] = point(i, axes.length, RADIUS + 20);
+        const [x, y] = point(i, axes.length, RADIUS + 16);
         return (
           <text
             key={a.label}
