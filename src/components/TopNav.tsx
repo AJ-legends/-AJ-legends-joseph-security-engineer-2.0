@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Download, Menu, X } from "lucide-react";
 
 import resume from "@/assets/resume.pdf.asset.json";
@@ -15,13 +15,34 @@ export const NAV = [
 
 export function TopNav() {
   const [open, setOpen] = useState(false);
+  const [floating, setFloating] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setFloating(window.scrollY > 40);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-border bg-background/90 backdrop-blur">
-      <div className="relative mx-auto flex w-[92%] max-w-[1400px] items-center justify-between py-3.5">
+    <nav
+      className={`sticky top-0 z-50 transition-all duration-300 ${
+        floating
+          ? "border-b border-transparent bg-transparent px-3 pt-3"
+          : "border-b border-border bg-background/90 backdrop-blur"
+      }`}
+    >
+      <div
+        className={`relative mx-auto flex items-center justify-between transition-all duration-300 ${
+          floating
+            ? "w-full max-w-[1180px] rounded-[16px] border border-border bg-card/85 px-5 py-2.5 shadow-[0_8px_30px_rgba(0,0,0,0.08)] backdrop-blur-md"
+            : "w-[92%] max-w-[1400px] py-3.5"
+        }`}
+      >
         <Link to="/" className="headline text-2xl leading-none tracking-tight">
           Alamu<span className="text-primary">.</span>
         </Link>
+
 
         <div className="absolute left-1/2 hidden -translate-x-1/2 items-center overflow-hidden rounded-[10px] border border-border bg-card shadow-[0_2px_12px_rgba(0,0,0,0.06)] lg:flex">
           {NAV.map((item) => (
