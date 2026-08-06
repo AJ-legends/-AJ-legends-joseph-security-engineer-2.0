@@ -98,6 +98,15 @@ export function ProfileCard() {
         >
           <Linkedin className="size-4" />
         </a>
+        <a
+          href={profile.github}
+          target="_blank"
+          rel="noreferrer"
+          aria-label="GitHub"
+          className="flex size-9 items-center justify-center rounded-[10px] border border-border text-muted-foreground transition-colors hover:border-primary hover:text-primary"
+        >
+          <Github className="size-4" />
+        </a>
       </div>
     </div>
   );
