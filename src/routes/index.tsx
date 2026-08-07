@@ -12,13 +12,13 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Alamu Joseph is an aspiring cybersecurity analyst and Python developer. Firewalls, packet sniffers, and an AI terminal you can interrogate.",
+          "Alamu Joseph is a cybersecurity analyst and Python developer. Penetration testing, AWS security, applied cryptography, and an AI terminal you can interrogate.",
       },
       { property: "og:title", content: "Alamu Joseph — Attack. Defend. Automate." },
       {
         property: "og:description",
         content:
-          "Cybersecurity portfolio: Python security tooling, ISC2 CC certified, First Class Computer Science undergraduate.",
+          "Cybersecurity portfolio: VAPT with Nmap and Metasploit, AWS infrastructure, homomorphic encryption, CGPA 4.93 Computer Science undergraduate.",
       },
     ],
   }),
