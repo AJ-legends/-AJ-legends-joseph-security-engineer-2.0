@@ -11,14 +11,15 @@ export const Route = createFileRoute("/about")({
       {
         name: "description",
         content:
-          "Alamu Joseph: First Class Computer Science undergraduate at Covenant University (CGPA 4.94), ISC2 Certified in Cybersecurity, Python security tooling builder.",
+          "Alamu Joseph: Computer Science undergraduate at Covenant University (CGPA 4.93), former IT/security intern at LPI Innovation Hub, working in VAPT, AWS and applied cryptography.",
       },
       { property: "og:title", content: "About — Alamu Joseph" },
       {
         property: "og:description",
         content:
-          "Education, skills and background of an aspiring cybersecurity analyst from Ibadan, Nigeria.",
+          "Education, experience and skills of a cybersecurity analyst from Ibadan, Nigeria.",
       },
+
     ],
   }),
   component: About,
