@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
 
 import { profile } from "@/lib/profile";
+import { TerminalWindow } from "@/components/TerminalWindow";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -53,24 +54,30 @@ function VerbCycle() {
 
 function Index() {
   return (
-    <div className="mx-auto max-w-4xl px-6 py-16 lg:py-24">
+    <div className="mx-auto max-w-6xl px-6 py-16 lg:py-24">
       <div className="label-mono text-primary">// uid=0(root) — session active</div>
 
-      <h1 className="headline mt-6 text-[15vw] leading-[0.82] sm:text-[8.5rem]">
-        <span className="block">
-          I <VerbCycle />
-        </span>
-        <span className="block">networks</span>
-      </h1>
+      <div className="mt-6 grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_340px]">
+        <div>
+          <h1 className="headline text-[15vw] leading-[0.82] sm:text-[8.5rem] lg:text-[7rem]">
+            <span className="block">
+              I <VerbCycle />
+            </span>
+            <span className="block">networks</span>
+          </h1>
 
+          <p className="quote-serif mt-8 max-w-xl text-2xl text-foreground">
+            &ldquo;Break it in a lab, so nobody breaks it in production.&rdquo;
+          </p>
 
-      <p className="quote-serif mt-8 max-w-xl text-2xl text-foreground">
-        &ldquo;Break it in a lab, so nobody breaks it in production.&rdquo;
-      </p>
+          <p className="mt-6 max-w-xl text-sm leading-relaxed text-muted-foreground">
+            {profile.bio}
+          </p>
+        </div>
 
-      <p className="mt-6 max-w-xl text-sm leading-relaxed text-muted-foreground">
-        {profile.bio}
-      </p>
+        <TerminalWindow />
+      </div>
+
 
       <div className="mt-10 flex flex-wrap gap-3">
         <Link
