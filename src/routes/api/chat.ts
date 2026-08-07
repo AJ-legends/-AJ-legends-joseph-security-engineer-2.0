@@ -18,6 +18,7 @@ DOSSIER
 - Email: ${profile.email} | Phone: ${profile.phone} | LinkedIn: ${profile.linkedin} | GitHub: ${profile.github}
 - Bio: ${profile.bio}
 - Education: ${profile.education.map((e) => `${e.degree}, ${e.school} (${e.period}) — ${e.note}`).join("; ")}
+- Experience: ${profile.experience.map((x) => `${x.role} at ${x.company}, ${x.place} (${x.period}): ${x.points.join(" ")}`).join(" | ")}
 - Skills: ${profile.skills.join(", ")}
 - Projects: ${profile.projects.map((p) => `${p.name}: ${p.description}`).join(" | ")}
 - Certifications: ${profile.certifications.map((c) => `${c.name} — ${c.issuer} (${c.year})`).join("; ")}
