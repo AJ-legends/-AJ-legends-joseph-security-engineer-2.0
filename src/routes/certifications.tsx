@@ -11,7 +11,8 @@ export const Route = createFileRoute("/certifications")({
       {
         name: "description",
         content:
-          "ISC2 Certified in Cybersecurity (CC), Cisco Introduction to Cybersecurity, Cisco Python Essentials 1, and Prompt Engineering for Everyone.",
+          "Cisco Ethical Hacking, Cybersecurity Essentials, Python Essentials, IT Essentials, Microsoft Office Specialist and Prompt Engineering for LLMs.",
+
       },
       { property: "og:title", content: "Certifications — Alamu Joseph" },
       {

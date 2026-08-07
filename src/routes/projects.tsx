@@ -10,12 +10,12 @@ export const Route = createFileRoute("/projects")({
       {
         name: "description",
         content:
-          "Python security projects by Alamu Joseph: a packet-filtering mini firewall, a research keylogger, and a packet sniffer with deep packet inspection.",
+          "Security projects by Alamu Joseph: a homomorphically encrypted student information system, a Windows VM penetration test, and a research keylogger.",
       },
       { property: "og:title", content: "Security Tooling — Alamu Joseph" },
       {
         property: "og:description",
-        content: "Three Python security tools: mini firewall, research keylogger, packet sniffer.",
+        content: "Encrypted student information system, Windows VM pentest, research keylogger.",
       },
     ],
   }),
