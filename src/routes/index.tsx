@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
 
 import { profile } from "@/lib/profile";
+import { TerminalWindow } from "@/components/TerminalWindow";
 
 export const Route = createFileRoute("/")({
   head: () => ({
