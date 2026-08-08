@@ -1,7 +1,7 @@
 export const profile = {
   name: "Alamu Joseph",
   handle: "alamu_joseph",
-  role: "Cybersecurity Analyst",
+  role: "Security Engineer",
   location: "Ibadan, Nigeria",
   address: "Ibadan, Oyo State, Nigeria",
   email: "alamujosephlegacy@gmail.com",
@@ -166,6 +166,34 @@ export const profile = {
         "[+] hook attached to input layer",
         "[*] writing to ./lab/session.log",
         "[i] mitigation notes: 04",
+      ],
+    },
+    {
+      slug: "python-firewall",
+      name: "Python Firewall — Rule-Based Packet Filter",
+      cmd: "sudo ./firewall.py --rules ./rules.yaml --iface eth0",
+      description:
+        "A rule-based firewall written in Python that inspects inbound and outbound packets against a configurable ruleset, blocking traffic by IP, port and protocol. Built to understand how stateful filtering, rule precedence and default-deny policies behave in practice.",
+      tags: ["Python", "Sockets", "Packet filtering", "Netfilter", "Linux"],
+      log: [
+        "[*] loading ruleset — 24 rules parsed",
+        "[+] default policy: DENY",
+        "[!] blocked 10.0.0.14:4444 — policy match #07",
+        "[i] 1,283 packets inspected",
+      ],
+    },
+    {
+      slug: "packet-sniffer",
+      name: "Packet Sniffer — Traffic Analyzer",
+      cmd: "sudo ./sniffer.py --iface eth0 --filter tcp",
+      description:
+        "A Python packet sniffer that captures live traffic on a network interface and decodes Ethernet, IP, TCP and UDP headers, printing a readable breakdown of each frame. Used alongside Wireshark to study protocol behaviour, plaintext exposure and anomalous flows.",
+      tags: ["Python", "Raw sockets", "TCP/IP", "Wireshark", "Traffic analysis"],
+      log: [
+        "[*] promiscuous mode enabled on eth0",
+        "[+] tcp 192.168.1.20:52344 -> 93.184.216.34:80",
+        "[!] plaintext credentials observed in http POST",
+        "[i] 4,096 frames decoded",
       ],
     },
   ],

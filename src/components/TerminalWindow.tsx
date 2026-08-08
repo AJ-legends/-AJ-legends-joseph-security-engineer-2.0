@@ -6,7 +6,7 @@ const SCRIPT: Line[] = [
   { prompt: "$", text: "whoami" },
   { text: "alamu_joseph" },
   { prompt: "$", text: "cat role.txt" },
-  { text: "Cybersecurity Analyst, Pentester" },
+  { text: "Security Engineer, Pentester" },
   { prompt: "$", text: "./init_portfolio.sh" },
   { text: "Ready." },
 ];

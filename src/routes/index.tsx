@@ -12,7 +12,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Alamu Joseph is a cybersecurity analyst and Python developer. Penetration testing, AWS security, applied cryptography, and an AI terminal you can interrogate.",
+          "Alamu Joseph is a security engineer and Python developer. Penetration testing, AWS security, applied cryptography, and an AI terminal you can interrogate.",
       },
       { property: "og:title", content: "Alamu Joseph — Attack. Defend. Automate." },
       {

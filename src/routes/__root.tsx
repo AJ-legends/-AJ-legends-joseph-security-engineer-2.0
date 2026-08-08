@@ -80,14 +80,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Alamu Joseph — Cybersecurity Analyst" },
+      { title: "Alamu Joseph — Security Engineer" },
       {
         name: "description",
         content:
-          "Portfolio of Alamu Joseph, aspiring cybersecurity analyst and Python developer building offensive and defensive security tooling.",
+          "Portfolio of Alamu Joseph, security engineer and Python developer building offensive and defensive security tooling.",
       },
       { name: "author", content: "Alamu Joseph" },
-      { property: "og:title", content: "Alamu Joseph — Cybersecurity Analyst" },
+      { property: "og:title", content: "Alamu Joseph — Security Engineer" },
       {
         property: "og:description",
         content:
