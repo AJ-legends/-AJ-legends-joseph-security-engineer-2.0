@@ -7,7 +7,7 @@ import { profile } from "@/lib/profile";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About — Alamu Joseph, Cybersecurity Analyst" },
+      { title: "About — Alamu Joseph, Security Engineer" },
       {
         name: "description",
         content:
@@ -17,7 +17,7 @@ export const Route = createFileRoute("/about")({
       {
         property: "og:description",
         content:
-          "Education, experience and skills of a cybersecurity analyst from Ibadan, Nigeria.",
+          "Education, experience and skills of a security engineer from Ibadan, Nigeria.",
       },
 
     ],
