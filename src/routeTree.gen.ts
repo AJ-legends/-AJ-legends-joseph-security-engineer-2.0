@@ -15,6 +15,8 @@ import { Route as CertificationsRouteImport } from './routes/certifications'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as PlaygroundRouteImport } from './routes/playground'
 import { Route as ProjectsRouteImport } from './routes/projects'
+import { Route as TerminalRouteImport } from './routes/terminal'
+import { Route as WorkRouteImport } from './routes/work'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
 
 const IndexRoute = IndexRouteImport.update({
@@ -47,6 +49,16 @@ const ProjectsRoute = ProjectsRouteImport.update({
   path: '/projects',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TerminalRoute = TerminalRouteImport.update({
+  id: '/terminal',
+  path: '/terminal',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WorkRoute = WorkRouteImport.update({
+  id: '/work',
+  path: '/work',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiChatRoute = ApiChatRouteImport.update({
   id: '/api/chat',
   path: '/api/chat',
@@ -60,6 +72,8 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/playground': typeof PlaygroundRoute
   '/projects': typeof ProjectsRoute
+  '/terminal': typeof TerminalRoute
+  '/work': typeof WorkRoute
   '/api/chat': typeof ApiChatRoute
 }
 export interface FileRoutesByTo {
@@ -69,6 +83,8 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/playground': typeof PlaygroundRoute
   '/projects': typeof ProjectsRoute
+  '/terminal': typeof TerminalRoute
+  '/work': typeof WorkRoute
   '/api/chat': typeof ApiChatRoute
 }
 export interface FileRoutesById {
@@ -79,6 +95,8 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/playground': typeof PlaygroundRoute
   '/projects': typeof ProjectsRoute
+  '/terminal': typeof TerminalRoute
+  '/work': typeof WorkRoute
   '/api/chat': typeof ApiChatRoute
 }
 export interface FileRouteTypes {
@@ -90,6 +108,8 @@ export interface FileRouteTypes {
     | '/contact'
     | '/playground'
     | '/projects'
+    | '/terminal'
+    | '/work'
     | '/api/chat'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -99,6 +119,8 @@ export interface FileRouteTypes {
     | '/contact'
     | '/playground'
     | '/projects'
+    | '/terminal'
+    | '/work'
     | '/api/chat'
   id:
     | '__root__'
@@ -108,6 +130,8 @@ export interface FileRouteTypes {
     | '/contact'
     | '/playground'
     | '/projects'
+    | '/terminal'
+    | '/work'
     | '/api/chat'
   fileRoutesById: FileRoutesById
 }
@@ -118,6 +142,8 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   PlaygroundRoute: typeof PlaygroundRoute
   ProjectsRoute: typeof ProjectsRoute
+  TerminalRoute: typeof TerminalRoute
+  WorkRoute: typeof WorkRoute
   ApiChatRoute: typeof ApiChatRoute
 }
 
@@ -165,6 +191,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProjectsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/terminal': {
+      id: '/terminal'
+      path: '/terminal'
+      fullPath: '/terminal'
+      preLoaderRoute: typeof TerminalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/work': {
+      id: '/work'
+      path: '/work'
+      fullPath: '/work'
+      preLoaderRoute: typeof WorkRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/chat': {
       id: '/api/chat'
       path: '/api/chat'
@@ -182,6 +222,8 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   PlaygroundRoute: PlaygroundRoute,
   ProjectsRoute: ProjectsRoute,
+  TerminalRoute: TerminalRoute,
+  WorkRoute: WorkRoute,
   ApiChatRoute: ApiChatRoute,
 }
 export const routeTree = rootRouteImport

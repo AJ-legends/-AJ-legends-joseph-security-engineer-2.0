@@ -7,15 +7,16 @@ import resume from "@/assets/resume.pdf.asset.json";
 export const NAV = [
   { to: "/", label: "Home" },
   { to: "/about", label: "About" },
+  { to: "/work", label: "Work" },
   { to: "/projects", label: "Projects" },
-  { to: "/certifications", label: "Certs" },
-  { to: "/playground", label: "Playground" },
+  { to: "/terminal", label: "Terminal" },
   { to: "/contact", label: "Contact" },
 ] as const;
 
 export function TopNav() {
   const [open, setOpen] = useState(false);
   const [floating, setFloating] = useState(false);
+  const [expanded, setExpanded] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setFloating(window.scrollY > 40);
@@ -23,6 +24,25 @@ export function TopNav() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    if (!floating) {
+      setExpanded(false);
+      return;
+    }
+    const t = window.setTimeout(() => setExpanded(true), 220);
+    return () => window.clearTimeout(t);
+  }, [floating]);
+
+  const resumeLink = (
+    <a
+      href={resume.url}
+      download="Alamu-Joseph-Resume.pdf"
+      className="inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-[10px] bg-primary px-4 py-2 text-[12px] uppercase tracking-[0.12em] text-primary-foreground transition-opacity hover:opacity-85"
+    >
+      Resume <Download className="size-3.5" />
+    </a>
+  );
 
   return (
     <nav
@@ -35,7 +55,7 @@ export function TopNav() {
       <div
         className={`relative mx-auto flex items-center transition-all duration-300 ${
           floating
-            ? "w-fit max-w-[1180px] justify-center gap-3 rounded-[16px] border border-border bg-card/85 px-4 py-2.5 shadow-[0_8px_30px_rgba(0,0,0,0.08)] backdrop-blur-md"
+            ? "w-fit max-w-[1180px] justify-center gap-2 rounded-[16px] border border-border bg-card/85 px-2 py-2 shadow-[0_8px_30px_rgba(0,0,0,0.08)] backdrop-blur-md"
             : "w-[92%] max-w-[1400px] justify-between py-3.5"
         }`}
       >
@@ -64,15 +84,20 @@ export function TopNav() {
           ))}
         </div>
 
+        {/* Docked: resume slides out of the Contact end of the pill */}
+        {floating && (
+          <div
+            className={`hidden overflow-hidden transition-all duration-500 ease-out lg:block ${
+              expanded ? "max-w-[180px] translate-x-0 opacity-100" : "max-w-0 -translate-x-4 opacity-0"
+            }`}
+          >
+            <div className="pl-2">{resumeLink}</div>
+          </div>
+        )}
 
         <div className="flex items-center gap-2">
-          <a
-            href={resume.url}
-            download="Alamu-Joseph-Resume.pdf"
-            className="hidden items-center gap-2 rounded-[10px] bg-primary px-4 py-2 text-[12px] uppercase tracking-[0.12em] text-primary-foreground transition-opacity hover:opacity-85 sm:inline-flex"
-          >
-            Resume <Download className="size-3.5" />
-          </a>
+          {!floating && <span className="hidden sm:inline-flex">{resumeLink}</span>}
+          {floating && <span className="inline-flex lg:hidden">{resumeLink}</span>}
           <button
             onClick={() => setOpen((v) => !v)}
             aria-label={open ? "Close menu" : "Open menu"}

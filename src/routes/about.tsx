@@ -11,13 +11,13 @@ export const Route = createFileRoute("/about")({
       {
         name: "description",
         content:
-          "Alamu Joseph: Computer Science undergraduate at Covenant University (CGPA 4.93), former IT/security intern at LPI Innovation Hub, working in VAPT, AWS and applied cryptography.",
+          "Alamu Joseph: Computer Science undergraduate at Covenant University (CGPA 4.93) working in VAPT, AWS and applied cryptography — plus a breakdown of his security skill set.",
       },
       { property: "og:title", content: "About — Alamu Joseph" },
       {
         property: "og:description",
         content:
-          "Education, experience and skills of a security engineer from Ibadan, Nigeria.",
+          "Background and skills of a security engineer from Ibadan, Nigeria.",
       },
 
     ],
@@ -44,60 +44,7 @@ function About() {
         can work on real traffic, real incidents and real detection engineering.
       </p>
 
-      <section className="mt-16">
-        <h2 className="label-mono mb-4 text-primary">// experience</h2>
-        <div className="border-t border-border">
-          {profile.experience.map((item) => (
-            <div
-              key={item.company}
-              className="grid gap-2 border-b border-border py-5 sm:grid-cols-[1fr_auto]"
-            >
-              <div>
-                <div className="headline text-2xl">{item.company}</div>
-                <div className="mt-1 text-xs text-muted-foreground">
-                  {item.role} — {item.place}
-                </div>
-                <ul className="mt-3 space-y-2">
-                  {item.points.map((point) => (
-                    <li
-                      key={point}
-                      className="flex gap-2 text-sm leading-relaxed text-muted-foreground"
-                    >
-                      <span className="text-primary">–</span>
-                      <span>{point}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="label-mono sm:text-right">{item.period}</div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="mt-16">
-        <h2 className="label-mono mb-4 text-primary">// education</h2>
-        <div className="border-t border-border">
-          {profile.education.map((item) => (
-            <div
-              key={item.school}
-              className="grid gap-2 border-b border-border py-5 sm:grid-cols-[1fr_auto]"
-            >
-              <div>
-                <div className="headline text-2xl">{item.school}</div>
-                <div className="mt-1 text-xs text-muted-foreground">
-                  {item.degree} — {item.place}
-                </div>
-                <div className="mt-2 text-xs text-primary">{item.note}</div>
-              </div>
-              <div className="label-mono sm:text-right">{item.period}</div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-
-      <section className="mt-16">
+      <section className="mt-14">
         <h2 className="label-mono mb-4 text-primary">// skills</h2>
         <SkillsRadar />
       </section>

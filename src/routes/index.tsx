@@ -87,7 +87,7 @@ function Index() {
           view tooling <ArrowRight className="size-3.5" />
         </Link>
         <Link
-          to="/playground"
+          to="/terminal"
           className="inline-flex items-center gap-2 rounded-[10px] border border-border px-5 py-3 text-xs uppercase tracking-[0.18em] transition-colors hover:border-primary hover:text-primary"
         >
           $ query the terminal
