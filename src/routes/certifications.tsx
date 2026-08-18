@@ -1,50 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { ShieldCheck } from "lucide-react";
-
-import { Page } from "@/components/Page";
-import { profile } from "@/lib/profile";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/certifications")({
-  head: () => ({
-    meta: [
-      { title: "Certifications — Alamu Joseph" },
-      {
-        name: "description",
-        content:
-          "Cisco Ethical Hacking, Cybersecurity Essentials, Python Essentials, IT Essentials, Microsoft Office Specialist and Prompt Engineering for LLMs.",
-
-      },
-      { property: "og:title", content: "Certifications — Alamu Joseph" },
-      {
-        property: "og:description",
-        content: "Security and Python certifications held by Alamu Joseph.",
-      },
-    ],
-  }),
-  component: Certifications,
+  beforeLoad: () => {
+    throw redirect({ to: "/work", replace: true });
+  },
 });
-
-function Certifications() {
-  return (
-    <Page index="04" title="Certs" kicker="verify --credentials">
-      <div className="border-t border-border">
-        {profile.certifications.map((cert) => (
-          <div
-            key={cert.name}
-            className="grid gap-3 border-b border-border py-6 sm:grid-cols-[auto_1fr_auto] sm:items-start"
-          >
-            <ShieldCheck className="size-5 text-primary" />
-            <div>
-              <h2 className="headline text-2xl">{cert.name}</h2>
-              <div className="label-mono mt-1">{cert.issuer}</div>
-              <p className="mt-2 max-w-xl text-xs leading-relaxed text-muted-foreground">
-                {cert.note}
-              </p>
-            </div>
-            <div className="label-mono text-primary sm:text-right">{cert.year}</div>
-          </div>
-        ))}
-      </div>
-    </Page>
-  );
-}
