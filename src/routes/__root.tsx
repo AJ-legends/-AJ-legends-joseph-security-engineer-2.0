@@ -14,6 +14,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { BootSequence, shouldPlayBoot } from "@/components/BootSequence";
 import { Sidebar } from "@/components/Sidebar";
 import { TopNav } from "@/components/TopNav";
+import { ScrollChain } from "@/components/ScrollChain";
 
 function NotFoundComponent() {
   return (
@@ -151,6 +152,7 @@ function RootComponent() {
           <Outlet />
         </main>
       </div>
+      <ScrollChain />
       {booting && <BootSequence onDone={() => setBooting(false)} />}
     </QueryClientProvider>
   );
