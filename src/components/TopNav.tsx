@@ -14,25 +14,24 @@ export const NAV = [
 ] as const;
 
 export function TopNav() {
-  const [open, setOpen] = useState(false);
   const [floating, setFloating] = useState(false);
-  const [expanded, setExpanded] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [pinned, setPinned] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setFloating(window.scrollY > 40);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+
+    const onChain = () => setPinned(true);
+    window.addEventListener("page-chain-nav", onChain);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("page-chain-nav", onChain);
+    };
   }, []);
 
-  useEffect(() => {
-    if (!floating) {
-      setExpanded(false);
-      return;
-    }
-    const t = window.setTimeout(() => setExpanded(true), 220);
-    return () => window.clearTimeout(t);
-  }, [floating]);
+  const docked = floating || pinned;
 
   const resumeLink = (
     <a
@@ -45,63 +44,61 @@ export function TopNav() {
   );
 
   return (
-    <nav
-      className={`sticky top-0 z-50 transition-all duration-300 ${
-        floating
-          ? "border-b border-transparent bg-transparent px-3 pt-3"
-          : "border-b border-border bg-background/90 backdrop-blur"
-      }`}
-    >
+    <nav className="sticky top-0 z-50 px-3 pt-3">
       <div
-        className={`relative mx-auto flex items-center transition-all duration-300 ${
-          floating
-            ? "w-fit max-w-[1180px] justify-center gap-2 rounded-[16px] border border-border bg-card/85 px-2 py-2 shadow-[0_8px_30px_rgba(0,0,0,0.08)] backdrop-blur-md"
-            : "w-[92%] max-w-[1400px] justify-between py-3.5"
+        className={`mx-auto flex items-center transition-[width,padding,background-color,border-color,box-shadow,gap] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+          docked
+            ? "w-fit gap-0 rounded-[16px] border border-border bg-card/85 px-2 py-2 shadow-[0_8px_30px_rgba(0,0,0,0.08)] backdrop-blur-md"
+            : "w-[min(1400px,96%)] gap-4 rounded-[16px] border border-transparent bg-transparent px-0 py-2 shadow-none"
         }`}
       >
-        {!floating && (
-          <Link to="/" className="headline text-2xl leading-none tracking-tight">
-            Joseph<span className="text-primary">.</span>
-          </Link>
-        )}
-
+        {/* Brand — collapses smoothly instead of unmounting */}
         <div
-          className={`hidden items-center overflow-hidden rounded-[10px] border border-border bg-card shadow-[0_2px_12px_rgba(0,0,0,0.06)] lg:flex ${
-            floating ? "" : "absolute left-1/2 -translate-x-1/2"
+          className={`overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+            docked ? "max-w-0 opacity-0" : "max-w-[220px] opacity-100"
           }`}
         >
-          {NAV.map((item) => (
-            <Link
-              key={item.to}
-              to={item.to}
-              activeOptions={{ exact: item.to === "/" }}
-              activeProps={{ className: "bg-secondary text-secondary-foreground" }}
-              inactiveProps={{ className: "text-muted-foreground hover:text-foreground" }}
-              className="px-4 py-2 text-[13px] transition-colors"
-            >
-              {item.label}
-            </Link>
-          ))}
+          <Link
+            to="/"
+            onClick={() => setPinned(false)}
+            className="headline whitespace-nowrap pr-4 text-2xl leading-none tracking-tight"
+          >
+            Joseph<span className="text-primary">.</span>
+          </Link>
         </div>
 
-        {/* Docked: resume slides out of the Contact end of the pill */}
-        {floating && (
-          <div
-            className={`hidden overflow-hidden transition-all duration-500 ease-out lg:block ${
-              expanded ? "max-w-[180px] translate-x-0 opacity-100" : "max-w-0 -translate-x-4 opacity-0"
-            }`}
-          >
-            <div className="pl-2">{resumeLink}</div>
+        <div className={`hidden flex-1 lg:flex ${docked ? "justify-center" : "justify-center"}`}>
+          <div className="flex items-center overflow-hidden rounded-[10px] border border-border bg-card shadow-[0_2px_12px_rgba(0,0,0,0.06)]">
+            {NAV.map((item) => (
+              <Link
+                key={item.to}
+                to={item.to}
+                activeOptions={{ exact: item.to === "/" }}
+                activeProps={{ className: "bg-secondary text-secondary-foreground" }}
+                inactiveProps={{ className: "text-muted-foreground hover:text-foreground" }}
+                className="px-4 py-2 text-[13px] transition-colors"
+              >
+                {item.label}
+              </Link>
+            ))}
           </div>
-        )}
+        </div>
 
-        <div className="flex items-center gap-2">
-          {!floating && <span className="hidden sm:inline-flex">{resumeLink}</span>}
-          {floating && <span className="inline-flex lg:hidden">{resumeLink}</span>}
+        {/* Resume — expands out of the Contact end when docked */}
+        <div
+          className={`hidden overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] lg:block ${
+            docked ? "max-w-[180px] pl-2 opacity-100" : "max-w-[180px] pl-0 opacity-100"
+          }`}
+        >
+          {resumeLink}
+        </div>
+
+        <div className="ml-auto flex items-center gap-2 lg:hidden">
+          {resumeLink}
           <button
             onClick={() => setOpen((v) => !v)}
             aria-label={open ? "Close menu" : "Open menu"}
-            className="rounded-[10px] border border-border p-2 text-foreground lg:hidden"
+            className="rounded-[10px] border border-border p-2 text-foreground"
           >
             {open ? <X className="size-4" /> : <Menu className="size-4" />}
           </button>
@@ -109,13 +106,16 @@ export function TopNav() {
       </div>
 
       {open && (
-        <div className="border-t border-border bg-background lg:hidden">
-          <div className="mx-auto flex w-[92%] max-w-[1400px] flex-col py-2">
+        <div className="mx-auto mt-2 w-[min(1400px,96%)] rounded-[14px] border border-border bg-card lg:hidden">
+          <div className="flex flex-col px-4 py-2">
             {NAV.map((item) => (
               <Link
                 key={item.to}
                 to={item.to}
-                onClick={() => setOpen(false)}
+                onClick={() => {
+                  setOpen(false);
+                  setPinned(false);
+                }}
                 activeOptions={{ exact: item.to === "/" }}
                 activeProps={{ className: "text-primary" }}
                 inactiveProps={{ className: "text-foreground" }}
