@@ -114,7 +114,7 @@ function Playground() {
           </span>
         </header>
 
-        <div className="max-h-[420px] min-h-[260px] overflow-y-auto p-4 font-mono text-[13px] leading-relaxed">
+        <div data-scroll-lock className="max-h-[420px] min-h-[260px] overflow-y-auto p-4 font-mono text-[13px] leading-relaxed">
           {messages.length === 0 && (
             <div className="text-terminal-muted">
               <div>[+] sentry online — dossier loaded</div>
