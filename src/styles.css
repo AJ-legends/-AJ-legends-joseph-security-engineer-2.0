@@ -120,6 +120,13 @@
   text-transform: uppercase;
 }
 
+@utility display-serif {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: var(--color-foreground);
+}
+
 @utility quote-serif {
   font-family: var(--font-serif);
   font-style: italic;
