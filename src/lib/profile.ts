@@ -11,6 +11,12 @@ export const profile = {
   github: "https://github.com/AJ-legends",
   bio: "Computer Science undergraduate at Covenant University working across offensive and defensive security — VAPT with Nmap, Metasploit and Burp Suite, AWS infrastructure, and privacy-preserving systems built on homomorphic encryption.",
   verbs: ["ATTACK", "DEFEND", "AUTOMATE"],
+  titles: ["Security Engineer", "Cloud Engineer"],
+  intro:
+    "B.Sc. Computer Science @ Covenant University · CGPA 4.93 / 5.0. Based in Ibadan, Nigeria. Breaking systems in the lab, hardening them in production, and automating the boring parts in Python.",
+  focus: ["vapt", "aws", "networking", "python", "cryptography", "incident response"],
+  quote:
+    "Break it in a lab, so nobody breaks it in production.",
   stats: [
     { value: "4.93", label: "CGPA / 5.0" },
     { value: "13", label: "Lab environments assessed" },
@@ -195,6 +201,20 @@ export const profile = {
         "[!] plaintext credentials observed in http POST",
         "[i] 4,096 frames decoded",
       ],
+    },
+  ],
+  leadership: [
+    {
+      org: "Covenant University Literary & Debating Society (CULDS)",
+      role: "General Secretary",
+      period: "2024 — 2025",
+      note: "Ran records, correspondence and meeting logistics for the society's executive council.",
+    },
+    {
+      org: "Nigerian Association of Computing Students (NACOS)",
+      role: "Member",
+      period: "2022 — Present",
+      note: "Campus chapter member — tech meetups, workshops and inter-university competitions.",
     },
   ],
   certifications: [
