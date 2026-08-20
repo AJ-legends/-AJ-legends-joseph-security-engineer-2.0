@@ -65,10 +65,15 @@ export function ProfileCard() {
   const [roleIndex, setRoleIndex] = useState(0);
 
   useEffect(() => {
+    console.log("[Sidebar] effect mounted");
     const id = window.setInterval(() => {
+      console.log("[Sidebar] interval tick");
       setRoleIndex((i) => (i + 1) % profile.titles.length);
     }, ROLE_INTERVAL_MS);
-    return () => window.clearInterval(id);
+    return () => {
+      console.log("[Sidebar] effect cleanup");
+      window.clearInterval(id);
+    };
   }, []);
 
   const currentRole = profile.titles[roleIndex];
