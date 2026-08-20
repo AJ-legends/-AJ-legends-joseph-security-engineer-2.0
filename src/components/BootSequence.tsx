@@ -61,7 +61,7 @@ export function BootSequence({ onDone }: { onDone: () => void }) {
 
   useEffect(() => {
     if (step >= SEQUENCE.length) {
-      const t = window.setTimeout(finish, 700);
+      const t = window.setTimeout(finish, 450);
       return () => window.clearTimeout(t);
     }
     const line = SEQUENCE[step];
