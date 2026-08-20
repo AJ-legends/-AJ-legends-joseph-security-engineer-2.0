@@ -1,9 +1,11 @@
 import { Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Check, Copy, Github, Linkedin, Mail, MapPin, Phone } from "lucide-react";
 
 import avatar from "@/assets/hacker-avatar.png";
 import { profile } from "@/lib/profile";
+
+const ROLE_INTERVAL_MS = 5000;
 
 function DetailRow({
   icon: Icon,
