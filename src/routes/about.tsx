@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { Page } from "@/components/Page";
 import { SkillsRadar } from "@/components/SkillsRadar";
-import { profile } from "@/lib/profile";
+
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -25,30 +25,76 @@ export const Route = createFileRoute("/about")({
   component: About,
 });
 
+const DOMAINS = [
+  {
+    title: "Cloud Security",
+    note: "Securing AWS workloads — IAM boundaries, network segmentation, hardened Linux hosts.",
+  },
+  {
+    title: "Application Security",
+    note: "Testing web and system applications for flaws, then writing the fix and the report.",
+  },
+  {
+    title: "AI Security",
+    note: "Researching how AI systems fail and how to use them safely inside security workflows.",
+  },
+];
+
+const NOW = [
+  "Finishing my B.Sc. in Computer Science at Covenant University (graduating 2026).",
+  "Running VAPT in lab environments with Nmap, Metasploit and Burp Suite.",
+  "Building privacy-preserving systems on the Paillier homomorphic cryptosystem.",
+  "Open to cybersecurity internships and junior analyst roles.",
+];
+
 function About() {
   return (
     <Page index="02" title="About" kicker="cat ./whoami.txt">
       <p className="quote-serif text-2xl leading-snug">
-        I&apos;m Joseph — a Computer Science undergraduate who spends more time reading packet
-        dumps and exploit output than lecture slides.
+        I&apos;m Joseph — I spend more time reading packet dumps and exploit output than lecture
+        slides.
       </p>
 
       <p className="mt-6 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-        {profile.bio} Most of what I know came from doing the thing: running assessments across
-        real lab environments, standing up Kali and Ubuntu workstations, and building a student
-        information system that computes over data it never gets to see in plaintext.
+        Security engineer working across offensive and defensive work: assessments in the lab,
+        hardening in production, and Python for everything repetitive.
       </p>
 
-      <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-        I&apos;m currently looking for cybersecurity internships and junior analyst roles where I
-        can work on real traffic, real incidents and real detection engineering.
-      </p>
+      <section className="mt-12">
+        <div className="label-mono mb-2 text-primary">// now</div>
+        <div className="label-mono mb-5 text-muted-foreground">August 2026</div>
+        <ul className="space-y-3.5">
+          {NOW.map((item) => (
+            <li key={item} className="flex gap-3">
+              <span
+                aria-hidden
+                className="mt-[7px] size-[7px] shrink-0 rotate-45 border border-primary bg-primary/10"
+              />
+              <span className="text-sm leading-relaxed">{item}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section className="mt-14">
+        <h2 className="label-mono mb-4 text-primary">// focus areas</h2>
+        <div className="grid gap-4 sm:grid-cols-3">
+          {DOMAINS.map((d) => (
+            <article
+              key={d.title}
+              className="rounded-[14px] border border-border bg-card p-5 transition-colors hover:border-border-strong"
+            >
+              <h3 className="display-serif text-lg">{d.title}</h3>
+              <p className="mt-2 text-[12px] leading-relaxed text-muted-foreground">{d.note}</p>
+            </article>
+          ))}
+        </div>
+      </section>
 
       <section className="mt-14">
         <h2 className="label-mono mb-4 text-primary">// skills</h2>
         <SkillsRadar />
       </section>
-
     </Page>
   );
 }

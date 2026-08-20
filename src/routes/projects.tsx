@@ -6,13 +6,13 @@ import { profile } from "@/lib/profile";
 export const Route = createFileRoute("/projects")({
   head: () => ({
     meta: [
-      { title: "Security Tooling — Alamu Joseph" },
+      { title: "Builds — Security Projects | Alamu Joseph" },
       {
         name: "description",
         content:
-          "Security projects by Alamu Joseph: a homomorphically encrypted student information system, a Windows VM penetration test, and a research keylogger.",
+          "Security projects by Alamu Joseph: a homomorphically encrypted student information system, a Windows VM penetration test, a research keylogger, a Python firewall and a packet sniffer.",
       },
-      { property: "og:title", content: "Security Tooling — Alamu Joseph" },
+      { property: "og:title", content: "Builds — Alamu Joseph" },
       {
         property: "og:description",
         content: "Encrypted student information system, Windows VM pentest, research keylogger.",
@@ -24,7 +24,13 @@ export const Route = createFileRoute("/projects")({
 
 function Projects() {
   return (
-    <Page index="03" title="Tooling" kicker="ls ./projects">
+    <Page index="04" title="Builds" kicker="ls ./projects">
+      <p className="mb-10 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+        These write-ups are text-first by design. Most of the work here lives in infrastructure,
+        cryptography and backend logic rather than in an interface, so the clearest way to show it
+        is through what it does and the output it produces.
+      </p>
+
       <div className="space-y-8">
         {profile.projects.map((project, i) => (
           <article key={project.slug} className="overflow-hidden rounded-[18px] border border-border bg-card">

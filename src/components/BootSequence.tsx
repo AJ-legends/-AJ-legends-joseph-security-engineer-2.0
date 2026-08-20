@@ -8,16 +8,17 @@ type Line = {
 };
 
 const SEQUENCE: Line[] = [
-  { text: "$ nc -lvnp 4444", tone: "dim", delay: 220 },
-  { text: "[*] listening on 0.0.0.0:4444 ...", tone: "dim", delay: 520 },
-  { text: "[+] connection from 102.89.41.17:51204", tone: "ok", delay: 420 },
-  { text: "[*] negotiating handshake  ...  ok", tone: "dim", delay: 360 },
-  { text: "[*] sending payload", progress: true, delay: 900 },
-  { text: "[+] shell obtained — uid=0(root) gid=0(root)", tone: "ok", delay: 340 },
-  { text: "$ whoami", tone: "dim", delay: 300 },
-  { text: "> alamu_joseph :: security", tone: "ok", delay: 320 },
-  { text: "[ ACCESS GRANTED ]", tone: "grant", delay: 420 },
+  { text: "$ nc -lvnp 4444", tone: "dim", delay: 160 },
+  { text: "[*] listening on 0.0.0.0:4444 ...", tone: "dim", delay: 380 },
+  { text: "[+] connection from 102.89.41.17:51204", tone: "ok", delay: 310 },
+  { text: "[*] negotiating handshake  ...  ok", tone: "dim", delay: 260 },
+  { text: "[*] sending payload", progress: true, delay: 660 },
+  { text: "[+] shell obtained — uid=0(root) gid=0(root)", tone: "ok", delay: 250 },
+  { text: "$ whoami", tone: "dim", delay: 220 },
+  { text: "> alamu_joseph :: security", tone: "ok", delay: 240 },
+  { text: "[ ACCESS GRANTED ]", tone: "grant", delay: 310 },
 ];
+
 
 const STORAGE_KEY = "aj_boot_done_v1";
 
@@ -60,7 +61,7 @@ export function BootSequence({ onDone }: { onDone: () => void }) {
 
   useEffect(() => {
     if (step >= SEQUENCE.length) {
-      const t = window.setTimeout(finish, 700);
+      const t = window.setTimeout(finish, 450);
       return () => window.clearTimeout(t);
     }
     const line = SEQUENCE[step];
@@ -72,7 +73,7 @@ export function BootSequence({ onDone }: { onDone: () => void }) {
     const payloadIndex = SEQUENCE.findIndex((l) => l.progress);
     if (step < payloadIndex) return;
     if (pct >= 100) return;
-    const t = window.setTimeout(() => setPct((p) => Math.min(100, p + 7)), 45);
+    const t = window.setTimeout(() => setPct((p) => Math.min(100, p + 10)), 40);
     return () => window.clearTimeout(t);
   }, [step, pct]);
 

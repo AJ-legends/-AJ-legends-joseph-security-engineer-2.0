@@ -106,10 +106,18 @@ export const profile = {
       school: "Covenant University",
       place: "Ota, Ogun State",
       degree: "B.Sc. Computer Science",
-      period: "In progress",
+      period: "Sep 2022 — Sep 2026",
       note: "CGPA 4.93 / 5.0 — Computer Security, Operating Systems, Algorithms & Data Structures, OOP",
     },
+    {
+      school: "Command Day Secondary School, Odogbo",
+      place: "Ibadan, Oyo State",
+      degree: "SSCE",
+      period: "2016 — 2022",
+      note: "Best Graduating Student and Head Boy — led the student body and graduated top of the set.",
+    },
   ],
+
   experience: [
     {
       company: "LPI Innovation Hub",
@@ -207,8 +215,14 @@ export const profile = {
     {
       org: "Covenant University Literary & Debating Society (CULDS)",
       role: "General Secretary",
-      period: "2024 — 2025",
+      period: "2025 — 2026",
       note: "Ran records, correspondence and meeting logistics for the society's executive council.",
+    },
+    {
+      org: "Google Developer Groups (GDG) — Covenant University",
+      role: "Cybersecurity Track Member",
+      period: "2024 — Present",
+      note: "Part of the cybersecurity track: routine meetings and tasks, penetration testing assessments, and production security evaluations of products built by the GDG community.",
     },
     {
       org: "Nigerian Association of Computing Students (NACOS)",
@@ -217,6 +231,7 @@ export const profile = {
       note: "Campus chapter member — tech meetups, workshops and inter-university competitions.",
     },
   ],
+
   certifications: [
     {
       name: "Ethical Hacking",

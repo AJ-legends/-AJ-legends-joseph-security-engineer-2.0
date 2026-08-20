@@ -46,7 +46,7 @@ export function TopNav() {
   return (
     <nav className="sticky top-0 z-50 px-3 pt-3">
       <div
-        className={`mx-auto flex items-center transition-[width,padding,background-color,border-color,box-shadow,gap] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+        className={`mx-auto flex items-center transition-[width,padding,background-color,border-color,box-shadow,gap] duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
           docked
             ? "w-fit gap-0 rounded-[16px] border border-border bg-card/85 px-2 py-2 shadow-[0_8px_30px_rgba(0,0,0,0.08)] backdrop-blur-md"
             : "w-[min(1400px,96%)] gap-4 rounded-[16px] border border-transparent bg-transparent px-0 py-2 shadow-none"
@@ -54,7 +54,7 @@ export function TopNav() {
       >
         {/* Brand — collapses smoothly instead of unmounting */}
         <div
-          className={`overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+          className={`overflow-hidden transition-all duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
             docked ? "max-w-0 opacity-0" : "max-w-[220px] opacity-100"
           }`}
         >
