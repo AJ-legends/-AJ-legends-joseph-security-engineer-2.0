@@ -62,6 +62,18 @@ function DetailRow({
 }
 
 export function ProfileCard() {
+  const [roleIndex, setRoleIndex] = useState(0);
+
+  useEffect(() => {
+    const id = window.setInterval(() => {
+      setRoleIndex((i) => (i + 1) % profile.titles.length);
+    }, ROLE_INTERVAL_MS);
+    return () => window.clearInterval(id);
+  }, []);
+
+  const currentRole = profile.titles[roleIndex];
+  const isCloud = currentRole === "Cloud Engineer";
+
   return (
     <div className="rounded-[22px] border border-border bg-card p-6">
       <div className="flex flex-col items-center text-center">
@@ -79,8 +91,14 @@ export function ProfileCard() {
         </div>
 
         <h2 className="headline mt-5 text-3xl">Alamu Joseph</h2>
-        <span className="mt-3 rounded-full bg-secondary px-3 py-1 text-[11px] text-secondary-foreground">
-          {profile.role}
+        <span
+          className={`mt-3 rounded-full px-3 py-1 text-[11px] transition-colors duration-500 ${
+            isCloud
+              ? "bg-foreground text-background"
+              : "bg-secondary text-secondary-foreground"
+          }`}
+        >
+          {currentRole}
         </span>
       </div>
 
