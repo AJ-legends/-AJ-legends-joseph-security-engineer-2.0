@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { Page } from "@/components/Page";
 import { SkillsRadar } from "@/components/SkillsRadar";
-import { profile } from "@/lib/profile";
+
 
 export const Route = createFileRoute("/about")({
   head: () => ({

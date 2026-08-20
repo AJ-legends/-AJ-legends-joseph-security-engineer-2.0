@@ -88,7 +88,7 @@ function Work() {
               <div className="mt-1 text-[13px] text-primary">{item.degree}</div>
               <div className="label-mono mt-1">{item.place}</div>
               <div className="mt-4 grid gap-2 border-t border-border pt-4 sm:grid-cols-[auto_1fr] sm:gap-x-6">
-                <span className="label-mono">coursework</span>
+                <span className="label-mono">{item.degree === "SSCE" ? "highlights" : "coursework"}</span>
                 <p className="text-[13px] leading-relaxed text-muted-foreground">{item.note}</p>
               </div>
             </article>
