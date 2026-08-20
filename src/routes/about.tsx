@@ -43,7 +43,7 @@ const DOMAINS = [
 const NOW = [
   "Finishing my B.Sc. in Computer Science at Covenant University (graduating 2026).",
   "Running VAPT in lab environments with Nmap, Metasploit and Burp Suite.",
-  "Building privacy-preserving systems on the Paillier homomorphic cryptosystem.",
+  "Building proficiency across cloud security and AI security.",
   "Open to cybersecurity internships and junior analyst roles.",
 ];
 
