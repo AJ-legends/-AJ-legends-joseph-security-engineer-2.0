@@ -43,7 +43,7 @@ const DOMAINS = [
 const NOW = [
   "Finishing my B.Sc. in Computer Science at Covenant University (graduating 2026).",
   "Running VAPT in lab environments with Nmap, Metasploit and Burp Suite.",
-  "Building privacy-preserving systems on the Paillier homomorphic cryptosystem.",
+  "Building proficiency across cloud security and AI security.",
   "Open to cybersecurity internships and junior analyst roles.",
 ];
 
@@ -51,8 +51,8 @@ function About() {
   return (
     <Page index="02" title="About" kicker="cat ./whoami.txt">
       <p className="quote-serif text-2xl leading-snug">
-        I&apos;m Joseph — I spend more time reading packet dumps and exploit output than lecture
-        slides.
+        I&apos;m Joseph — a final-year Computer Science student who spends most of his time between
+        lecture notes, lab VMs, and trying to break things before someone else does.
       </p>
 
       <p className="mt-6 max-w-2xl text-sm leading-relaxed text-muted-foreground">
@@ -82,10 +82,12 @@ function About() {
           {DOMAINS.map((d) => (
             <article
               key={d.title}
-              className="rounded-[14px] border border-border bg-card p-5 transition-colors hover:border-border-strong"
+              className="group rounded-[14px] border border-border bg-card p-5 transition-all duration-300 hover:border-foreground hover:bg-foreground"
             >
-              <h3 className="display-serif text-lg">{d.title}</h3>
-              <p className="mt-2 text-[12px] leading-relaxed text-muted-foreground">{d.note}</p>
+              <h3 className="display-serif text-lg group-hover:text-background">{d.title}</h3>
+              <p className="mt-2 text-[12px] leading-relaxed text-muted-foreground group-hover:text-background/70">
+                {d.note}
+              </p>
             </article>
           ))}
         </div>
