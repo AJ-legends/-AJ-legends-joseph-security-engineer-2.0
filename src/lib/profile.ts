@@ -215,8 +215,14 @@ export const profile = {
     {
       org: "Covenant University Literary & Debating Society (CULDS)",
       role: "General Secretary",
-      period: "2024 — 2025",
+      period: "2025 — 2026",
       note: "Ran records, correspondence and meeting logistics for the society's executive council.",
+    },
+    {
+      org: "Google Developer Groups (GDG) — Covenant University",
+      role: "Cybersecurity Track Member",
+      period: "2024 — Present",
+      note: "Part of the cybersecurity track: routine meetings and tasks, penetration testing assessments, and production security evaluations of products built by the GDG community.",
     },
     {
       org: "Nigerian Association of Computing Students (NACOS)",
@@ -225,6 +231,7 @@ export const profile = {
       note: "Campus chapter member — tech meetups, workshops and inter-university competitions.",
     },
   ],
+
   certifications: [
     {
       name: "Ethical Hacking",
