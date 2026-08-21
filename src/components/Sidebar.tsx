@@ -95,7 +95,7 @@ export function ProfileCard() {
           className={`mt-3 rounded-full px-3 py-1 text-[11px] transition-colors duration-500 ${
             isCloud
               ? "bg-foreground text-background"
-              : "bg-secondary text-secondary-foreground"
+              : "border border-chip-border bg-chip text-chip-foreground"
           }`}
         >
           {currentRole}

@@ -39,6 +39,9 @@
   --color-ring: var(--ring);
   --color-ring-offset-background: var(--background);
   --color-surface: var(--surface);
+  --color-chip: var(--chip);
+  --color-chip-foreground: var(--chip-foreground);
+  --color-chip-border: var(--chip-border);
   --color-warn: var(--warn);
   --color-terminal: var(--terminal);
   --color-terminal-foreground: var(--terminal-foreground);
@@ -71,6 +74,9 @@
   --destructive: #b3261e;
   --destructive-foreground: #fafaf8;
   --warn: #8a7a45;
+  --chip: #d8d8cd;
+  --chip-foreground: #101010;
+  --chip-border: #c2c2b6;
   --border: #e3e3dc;
   --border-strong: #c9c9c0;
   --input: #e3e3dc;
@@ -178,4 +184,24 @@
     background-color: var(--color-terminal-accent);
     animation: caret-blink 1s steps(1, end) infinite;
   }
+}
+
+@utility hl {
+  background-image: linear-gradient(to top, var(--color-chip) 0.42em, transparent 0.42em);
+  color: var(--color-foreground);
+  font-weight: 500;
+  padding-inline: 0.1em;
+}
+
+@utility chip {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid var(--color-chip-border);
+  background-color: var(--color-chip);
+  color: var(--color-chip-foreground);
+  padding: 0.25rem 0.625rem;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
