@@ -55,7 +55,7 @@ function Work() {
                 <h3 className="display-serif text-xl">{item.company}</h3>
                 <span className="label-mono">{item.period}</span>
               </div>
-              <div className="mt-1 text-[13px] text-primary">{item.role}</div>
+              <div className="mt-1 text-[13px] font-medium text-foreground">{item.role}</div>
               <div className="label-mono mt-1">{item.place}</div>
               <ul className="mt-4 space-y-2.5">
                 {item.points.map((point) => (
@@ -85,7 +85,7 @@ function Work() {
                 <h3 className="display-serif text-xl">{item.school}</h3>
                 <span className="label-mono">{item.period}</span>
               </div>
-              <div className="mt-1 text-[13px] text-primary">{item.degree}</div>
+              <div className="mt-1 text-[13px] font-medium text-foreground">{item.degree}</div>
               <div className="label-mono mt-1">{item.place}</div>
               <div className="mt-4 grid gap-2 border-t border-border pt-4 sm:grid-cols-[auto_1fr] sm:gap-x-6">
                 <span className="label-mono">{item.degree === "SSCE" ? "highlights" : "coursework"}</span>
@@ -110,7 +110,7 @@ function Work() {
                 <h3 className="text-[13px] font-medium leading-snug">{item.org}</h3>
               </div>
               <div className="mt-3 flex items-baseline justify-between gap-3">
-                <span className="rounded-full bg-secondary px-2.5 py-1 text-[11px] uppercase tracking-[0.12em] text-secondary-foreground">
+                <span className="chip">
                   {item.role}
                 </span>
                 <span className="label-mono">{item.period}</span>
