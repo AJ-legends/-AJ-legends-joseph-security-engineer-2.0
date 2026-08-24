@@ -25,7 +25,7 @@ export const Route = createFileRoute("/work")({
 function SectionHeading({ index, title }: { index: string; title: string }) {
   return (
     <div className="mb-8 flex items-baseline gap-3 border-b border-border pb-3">
-      <span className="label-mono text-primary">{index}</span>
+      <span className="section-index">{index}</span>
       <h2 className="display-serif text-2xl">{title}</h2>
     </div>
   );
@@ -55,7 +55,9 @@ function Work() {
                 <h3 className="display-serif text-xl">{item.company}</h3>
                 <span className="label-mono">{item.period}</span>
               </div>
-              <div className="mt-1 text-[13px] font-medium text-foreground">{item.role}</div>
+              <div className="mt-1 text-[13px] font-medium text-foreground">
+                <span className="soft-highlight">{item.role}</span>
+              </div>
               <div className="label-mono mt-1">{item.place}</div>
               <ul className="mt-4 space-y-2.5">
                 {item.points.map((point) => (
@@ -79,13 +81,15 @@ function Work() {
           {profile.education.map((item) => (
             <article
               key={item.school}
-              className="rounded-[14px] border border-border bg-card p-6 transition-colors hover:border-border-strong"
+              className="micro-card rounded-[14px] border border-border bg-card p-6"
             >
               <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
                 <h3 className="display-serif text-xl">{item.school}</h3>
                 <span className="label-mono">{item.period}</span>
               </div>
-              <div className="mt-1 text-[13px] font-medium text-foreground">{item.degree}</div>
+              <div className="mt-1 text-[13px] font-medium text-foreground">
+                <span className="soft-highlight">{item.degree}</span>
+              </div>
               <div className="label-mono mt-1">{item.place}</div>
               <div className="mt-4 grid gap-2 border-t border-border pt-4 sm:grid-cols-[auto_1fr] sm:gap-x-6">
                 <span className="label-mono">{item.degree === "SSCE" ? "highlights" : "coursework"}</span>
@@ -103,16 +107,14 @@ function Work() {
           {profile.leadership.map((item) => (
             <article
               key={item.org}
-              className="flex flex-col rounded-[14px] border border-border bg-card p-5"
+              className="micro-card flex flex-col rounded-[14px] border border-border bg-card p-5"
             >
               <div className="flex items-start gap-3">
                 <Diamond />
                 <h3 className="text-[13px] font-medium leading-snug">{item.org}</h3>
               </div>
               <div className="mt-3 flex items-baseline justify-between gap-3">
-                <span className="chip">
-                  {item.role}
-                </span>
+                <span className="chip-strong">{item.role}</span>
                 <span className="label-mono">{item.period}</span>
               </div>
               <p className="mt-3 text-[12px] leading-relaxed text-muted-foreground">{item.note}</p>
@@ -128,7 +130,7 @@ function Work() {
           {profile.certifications.map((cert) => (
             <article
               key={cert.name}
-              className="group rounded-[14px] border border-border bg-card p-5 transition-colors hover:border-border-strong"
+              className="micro-card group rounded-[14px] border border-border bg-card p-5"
             >
               <div className="flex items-start justify-between gap-3">
                 <h3 className="text-[13px] font-medium leading-snug">{cert.name}</h3>

@@ -15,6 +15,7 @@ import { BootSequence, shouldPlayBoot } from "@/components/BootSequence";
 import { Sidebar } from "@/components/Sidebar";
 import { TopNav } from "@/components/TopNav";
 import { ScrollChain } from "@/components/ScrollChain";
+import { MobileFooter } from "@/components/MobileFooter";
 
 function NotFoundComponent() {
   return (
@@ -105,7 +106,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300&family=JetBrains+Mono:wght@300;400;500;700&display=swap",
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "icon", href: "/hacker-avatar.png?v=2", type: "image/png" },
+      { rel: "apple-touch-icon", href: "/hacker-avatar.png?v=2" },
     ],
   }),
   shellComponent: RootShell,
@@ -151,6 +153,7 @@ function RootComponent() {
           {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
           <Outlet />
         </main>
+        <MobileFooter />
       </div>
       <ScrollChain />
       {booting && <BootSequence onDone={() => setBooting(false)} />}

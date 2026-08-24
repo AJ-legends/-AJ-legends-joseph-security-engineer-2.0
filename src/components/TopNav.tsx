@@ -2,8 +2,6 @@ import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Download, Menu, X } from "lucide-react";
 
-import resume from "@/assets/resume.pdf.asset.json";
-
 export const NAV = [
   { to: "/", label: "Home" },
   { to: "/about", label: "About" },
@@ -35,7 +33,7 @@ export function TopNav() {
 
   const resumeLink = (
     <a
-      href={resume.url}
+      href="/Alamu_Joseph_Resume.pdf"
       download="Alamu-Joseph-Resume.pdf"
       className="inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-[10px] bg-primary px-4 py-2 text-[12px] uppercase tracking-[0.12em] text-primary-foreground transition-opacity hover:opacity-85"
     >
@@ -67,7 +65,7 @@ export function TopNav() {
           </Link>
         </div>
 
-        <div className={`hidden flex-1 lg:flex ${docked ? "justify-center" : "justify-center"}`}>
+        <div className={`hidden flex-1 md:flex ${docked ? "justify-center" : "justify-center"}`}>
           <div className="flex items-center overflow-hidden rounded-[10px] border border-border bg-card shadow-[0_2px_12px_rgba(0,0,0,0.06)]">
             {NAV.map((item) => (
               <Link
@@ -76,7 +74,7 @@ export function TopNav() {
                 activeOptions={{ exact: item.to === "/" }}
                 activeProps={{ className: "bg-secondary text-secondary-foreground" }}
                 inactiveProps={{ className: "text-muted-foreground hover:text-foreground" }}
-                className="px-4 py-2 text-[13px] transition-colors"
+                className="px-2.5 py-2 text-[11px] transition-colors lg:px-4 lg:text-[13px]"
               >
                 {item.label}
               </Link>
@@ -86,14 +84,14 @@ export function TopNav() {
 
         {/* Resume — expands out of the Contact end when docked */}
         <div
-          className={`hidden overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] lg:block ${
+          className={`hidden overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] md:block ${
             docked ? "max-w-[180px] pl-2 opacity-100" : "max-w-[180px] pl-0 opacity-100"
           }`}
         >
           {resumeLink}
         </div>
 
-        <div className="ml-auto flex items-center gap-2 lg:hidden">
+        <div className="ml-auto flex items-center gap-2 md:hidden">
           {resumeLink}
           <button
             onClick={() => setOpen((v) => !v)}
@@ -106,7 +104,7 @@ export function TopNav() {
       </div>
 
       {open && (
-        <div className="mx-auto mt-2 w-[min(1400px,96%)] rounded-[14px] border border-border bg-card lg:hidden">
+        <div className="mx-auto mt-2 w-[min(1400px,96%)] rounded-[14px] border border-border bg-card md:hidden">
           <div className="flex flex-col px-4 py-2">
             {NAV.map((item) => (
               <Link

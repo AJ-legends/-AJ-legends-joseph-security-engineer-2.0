@@ -44,10 +44,14 @@ function Index() {
             {profile.intro}
           </p>
 
-          <p className="mt-6 font-mono text-xs text-muted-foreground">
-            <span className="text-primary">$ focus:</span>{" "}
-            {profile.focus.join("  ·  ")}
-          </p>
+          <div className="mt-6 flex flex-wrap items-center gap-2 font-mono text-xs text-muted-foreground">
+            <span className="mr-1 text-primary">$ focus:</span>
+            {profile.focus.map((item) => (
+              <span key={item} className="micro-tag">
+                {item}
+              </span>
+            ))}
+          </div>
 
           <blockquote className="mt-8 border-l-2 border-primary pl-4">
             <p className="quote-serif text-lg leading-relaxed text-foreground">{profile.quote}</p>
