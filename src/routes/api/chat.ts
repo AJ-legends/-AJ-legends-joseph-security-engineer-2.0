@@ -1,10 +1,88 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { convertToModelMessages, streamText, type UIMessage } from "ai";
+import { z } from "zod";
 
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { profile } from "@/lib/profile";
 
-type ChatBody = { messages?: unknown };
+const MAX_REQUEST_BYTES = 16_000;
+const MAX_MESSAGES = 12;
+const MAX_MESSAGE_LENGTH = 1_000;
+const RATE_LIMIT_MAX_REQUESTS = 10;
+const RATE_LIMIT_WINDOW_MS = 60_000;
+
+const textPartSchema = z
+  .object({
+    type: z.literal("text"),
+    text: z.string().min(1).max(MAX_MESSAGE_LENGTH),
+  })
+  .strict();
+
+const messageSchema = z
+  .object({
+    id: z.string().uuid(),
+    role: z.enum(["user", "assistant"]),
+    parts: z.array(textPartSchema).min(1).max(1),
+  })
+  .strict();
+
+const chatBodySchema = z
+  .object({
+    messages: z.array(messageSchema).min(1).max(MAX_MESSAGES),
+  })
+  .strict();
+
+type RateLimitEntry = { count: number; resetAt: number };
+
+const rateLimitEntries = new Map<string, RateLimitEntry>();
+
+function errorResponse(status: number, message: string, headers?: HeadersInit) {
+  return Response.json({ error: { message } }, { status, headers });
+}
+
+function getClientId(request: Request) {
+  return (
+    request.headers.get("x-vercel-forwarded-for") ??
+    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+    request.headers.get("cf-connecting-ip") ??
+    "unknown"
+  );
+}
+
+function enforceRateLimit(request: Request) {
+  const now = Date.now();
+  const clientId = getClientId(request);
+
+  for (const [id, entry] of rateLimitEntries) {
+    if (entry.resetAt <= now) rateLimitEntries.delete(id);
+  }
+
+  const entry = rateLimitEntries.get(clientId);
+  if (entry && entry.resetAt > now) {
+    if (entry.count >= RATE_LIMIT_MAX_REQUESTS) {
+      const retryAfter = Math.ceil((entry.resetAt - now) / 1000);
+      return errorResponse(429, "Too many requests. Please wait a minute and try again.", {
+        "Retry-After": String(retryAfter),
+      });
+    }
+
+    entry.count += 1;
+    return null;
+  }
+
+  rateLimitEntries.set(clientId, {
+    count: 1,
+    resetAt: now + RATE_LIMIT_WINDOW_MS,
+  });
+  return null;
+}
+
+function sanitizeText(text: string) {
+  return text
+    .normalize("NFKC")
+    .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F\u202A-\u202E\u2066-\u2069]/g, "")
+    .trim();
+}
 
 function buildSystemPrompt() {
   return `You are "SENTRY", the terminal-based AI assistant embedded in the portfolio website of ${profile.name}, a security engineer.
@@ -36,30 +114,69 @@ export const Route = createFileRoute("/api/chat")({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        const { messages } = (await request.json()) as ChatBody;
-        if (!Array.isArray(messages)) {
-          return new Response("Messages are required", { status: 400 });
+        const contentLength = Number(request.headers.get("content-length"));
+        if (Number.isFinite(contentLength) && contentLength > MAX_REQUEST_BYTES) {
+          return errorResponse(413, "Request is too large.");
+        }
+
+        const rateLimitError = enforceRateLimit(request);
+        if (rateLimitError) return rateLimitError;
+
+        let body: unknown;
+        try {
+          const rawBody = await request.text();
+          if (new TextEncoder().encode(rawBody).byteLength > MAX_REQUEST_BYTES) {
+            return errorResponse(413, "Request is too large.");
+          }
+          body = JSON.parse(rawBody);
+        } catch {
+          return errorResponse(400, "Request body must be valid JSON.");
+        }
+
+        const parsedBody = chatBodySchema.safeParse(body);
+        if (!parsedBody.success) {
+          return errorResponse(400, "Send 1 to 12 text messages, each up to 1,000 characters.");
+        }
+
+        const messages = parsedBody.data.messages.map((message) => ({
+          ...message,
+          parts: message.parts.map((part) => ({ ...part, text: sanitizeText(part.text) })),
+        }));
+        if (messages.some((message) => !message.parts[0].text)) {
+          return errorResponse(400, "Messages cannot be empty.");
+        }
+        if (messages.at(-1)?.role !== "user") {
+          return errorResponse(400, "The last message must be from the user.");
         }
 
         const key = process.env.GEMINI_API_KEY;
         if (!key) {
-          return new Response("AI is not configured", { status: 500 });
+          return errorResponse(503, "The AI terminal is temporarily unavailable.");
         }
 
         try {
           const google = createGoogleGenerativeAI({
-          apiKey: key,
+            apiKey: key,
           });
           const result = streamText({
-              model: google("gemini-3.6-flash"),
+            model: google("gemini-3.6-flash"),
             system: buildSystemPrompt(),
             messages: await convertToModelMessages(messages as UIMessage[]),
+            maxRetries: 0,
+            timeout: {
+              totalMs: 25_000,
+              firstChunkMs: 10_000,
+              chunkMs: 10_000,
+            },
+            onError: ({ error }) => {
+              console.error("chat stream error", error);
+            },
           });
 
           return result.toTextStreamResponse();
         } catch (error) {
           console.error("chat error", error);
-          return new Response("Upstream AI error", { status: 502 });
+          return errorResponse(502, "The AI provider could not complete that request. Please try again.");
         }
       },
     },

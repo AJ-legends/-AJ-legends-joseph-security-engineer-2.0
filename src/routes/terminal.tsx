@@ -24,6 +24,10 @@ export const Route = createFileRoute("/terminal")({
 
 type Msg = { id: string; role: "user" | "assistant"; text: string };
 
+const MAX_INPUT_LENGTH = 1_000;
+const MAX_HISTORY_MESSAGES = 10;
+const CLIENT_TIMEOUT_MS = 30_000;
+
 const SUGGESTIONS = [
   "what tools has joseph built?",
   "is he available for internships?",
@@ -50,22 +54,35 @@ function Playground() {
   const send = async (raw: string) => {
     const text = raw.trim();
     if (!text || busy) return;
+    if (text.length > MAX_INPUT_LENGTH) {
+      setError(`message is limited to ${MAX_INPUT_LENGTH.toLocaleString()} characters.`);
+      return;
+    }
 
     setError(null);
     setInput("");
     setBusy(true);
 
-    const history = [...messages, { id: crypto.randomUUID(), role: "user" as const, text }];
-    setMessages(history);
+    const userMessage = { id: crypto.randomUUID(), role: "user" as const, text };
+    const conversation = [...messages, userMessage];
+    const requestMessages = [
+      ...messages.slice(-MAX_HISTORY_MESSAGES),
+      userMessage,
+    ];
+    setMessages(conversation);
     const replyId = crypto.randomUUID();
-    setMessages([...history, { id: replyId, role: "assistant", text: "" }]);
+    setMessages([...conversation, { id: replyId, role: "assistant", text: "" }]);
 
+    let timeout: number | undefined;
     try {
+      const controller = new AbortController();
+      timeout = window.setTimeout(() => controller.abort(), CLIENT_TIMEOUT_MS);
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        signal: controller.signal,
         body: JSON.stringify({
-          messages: history.map((m) => ({
+          messages: requestMessages.map((m) => ({
             id: m.id,
             role: m.role,
             parts: [{ type: "text", text: m.text }],
@@ -73,9 +90,12 @@ function Playground() {
         }),
       });
 
-      if (res.status === 429) throw new Error("rate limited — wait a moment and retry.");
-      if (res.status === 402) throw new Error("ai credits exhausted on this host.");
-      if (!res.ok || !res.body) throw new Error("upstream unreachable.");
+      if (!res.ok || !res.body) {
+        const payload = (await res.json().catch(() => null)) as {
+          error?: { message?: string };
+        } | null;
+        throw new Error(payload?.error?.message ?? "terminal request failed.");
+      }
 
       const reader = res.body.getReader();
       const decoder = new TextDecoder();
@@ -89,11 +109,19 @@ function Playground() {
           prev.map((m) => (m.id === replyId ? { ...m, text: acc } : m)),
         );
       }
+
+      if (!acc.trim()) throw new Error("The AI did not return a response. Please try again.");
     } catch (e) {
-      const message = e instanceof Error ? e.message : "unknown fault";
+      const message =
+        e instanceof DOMException && e.name === "AbortError"
+          ? "request timed out. Please try again."
+          : e instanceof Error
+            ? e.message
+            : "unknown fault";
       setError(message);
       setMessages((prev) => prev.filter((m) => m.id !== replyId));
     } finally {
+      if (timeout !== undefined) window.clearTimeout(timeout);
       setBusy(false);
       inputRef.current?.focus();
     }
@@ -151,6 +179,7 @@ function Playground() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             disabled={busy}
+            maxLength={MAX_INPUT_LENGTH}
             placeholder="ask about joseph..."
             aria-label="Ask the terminal a question"
             className="flex-1 bg-transparent font-mono text-[13px] text-terminal-foreground outline-none placeholder:text-terminal-muted disabled:opacity-50"
