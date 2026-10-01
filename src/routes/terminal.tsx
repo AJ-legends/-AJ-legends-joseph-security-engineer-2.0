@@ -2,23 +2,15 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 
 import { Page } from "@/components/Page";
+import { pageHead } from "@/lib/site";
 
 export const Route = createFileRoute("/terminal")({
-  head: () => ({
-    meta: [
-      { title: "Playground — Ask Joseph's AI Terminal" },
-      {
-        name: "description",
-        content:
-          "SENTRY is an AI terminal trained on Alamu Joseph's background. Ask it about his security tooling, certifications, skills, and availability.",
-      },
-      { property: "og:title", content: "Playground — Ask Joseph's AI Terminal" },
-      {
-        property: "og:description",
-        content: "Query an AI shell about Alamu Joseph's cybersecurity work.",
-      },
-    ],
-  }),
+  head: () =>
+    pageHead(
+      "/terminal",
+      "Playground — Ask Joseph's AI Terminal",
+      "SENTRY is an AI terminal trained on Alamu Joseph's background. Ask it about his security tooling, certifications, skills, and availability.",
+    ),
   component: Playground,
 });
 

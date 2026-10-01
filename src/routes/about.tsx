@@ -2,26 +2,16 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { Page } from "@/components/Page";
 import { SkillsRadar } from "@/components/SkillsRadar";
+import { pageHead } from "@/lib/site";
 
 
 export const Route = createFileRoute("/about")({
-  head: () => ({
-    meta: [
-      { title: "About — Alamu Joseph, Security Engineer" },
-      {
-        name: "description",
-        content:
-          "Alamu Joseph: Computer Science undergraduate at Covenant University (CGPA 4.93) working in VAPT, AWS and applied cryptography — plus a breakdown of his security skill set.",
-      },
-      { property: "og:title", content: "About — Alamu Joseph" },
-      {
-        property: "og:description",
-        content:
-          "Background and skills of a security engineer from Ibadan, Nigeria.",
-      },
-
-    ],
-  }),
+  head: () =>
+    pageHead(
+      "/about",
+      "About — Alamu Joseph, Security Engineer",
+      "Alamu Joseph: Computer Science undergraduate at Covenant University (CGPA 4.93) working in VAPT, AWS and applied cryptography — plus a breakdown of his security skill set.",
+    ),
   component: About,
 });
 

@@ -2,23 +2,15 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { Page } from "@/components/Page";
 import { profile } from "@/lib/profile";
+import { pageHead } from "@/lib/site";
 
 export const Route = createFileRoute("/projects")({
-  head: () => ({
-    meta: [
-      { title: "Builds — Security Projects | Alamu Joseph" },
-      {
-        name: "description",
-        content:
-          "Security projects by Alamu Joseph: a homomorphically encrypted student information system, a Windows VM penetration test, a research keylogger, a Python firewall and a packet sniffer.",
-      },
-      { property: "og:title", content: "Builds — Alamu Joseph" },
-      {
-        property: "og:description",
-        content: "Encrypted student information system, Windows VM pentest, research keylogger.",
-      },
-    ],
-  }),
+  head: () =>
+    pageHead(
+      "/projects",
+      "Builds — Security Projects | Alamu Joseph",
+      "Security projects by Alamu Joseph: a homomorphically encrypted student information system, a Windows VM penetration test, a research keylogger, a Python firewall and a packet sniffer.",
+    ),
   component: Projects,
 });
 

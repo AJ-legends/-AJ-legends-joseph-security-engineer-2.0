@@ -2,23 +2,15 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { Page } from "@/components/Page";
 import { profile } from "@/lib/profile";
+import { pageHead } from "@/lib/site";
 
 export const Route = createFileRoute("/work")({
-  head: () => ({
-    meta: [
-      { title: "Work — Experience, Education & Certifications | Alamu Joseph" },
-      {
-        name: "description",
-        content:
-          "Alamu Joseph's security experience at LPI Innovation Hub, Computer Science studies at Covenant University (CGPA 4.93), leadership roles, and Cisco, Microsoft and AI certifications.",
-      },
-      { property: "og:title", content: "Work — Alamu Joseph" },
-      {
-        property: "og:description",
-        content: "Experience, education, leadership and certifications of a security engineer.",
-      },
-    ],
-  }),
+  head: () =>
+    pageHead(
+      "/work",
+      "Work — Experience, Education & Certifications | Alamu Joseph",
+      "Alamu Joseph's security experience at LPI Innovation Hub, Computer Science studies at Covenant University (CGPA 4.93), leadership roles, and Cisco, Microsoft and AI certifications.",
+    ),
   component: Work,
 });
 

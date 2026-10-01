@@ -3,24 +3,15 @@ import { ArrowRight } from "lucide-react";
 
 import { profile } from "@/lib/profile";
 import { TerminalWindow } from "@/components/TerminalWindow";
+import { pageHead } from "@/lib/site";
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Alamu Joseph — Security Engineer & Cloud Engineer" },
-      {
-        name: "description",
-        content:
-          "Alamu Joseph is a security engineer and cloud engineer. Penetration testing, AWS infrastructure, applied cryptography, and an AI terminal you can interrogate.",
-      },
-      { property: "og:title", content: "Alamu Joseph — Security Engineer & Cloud Engineer" },
-      {
-        property: "og:description",
-        content:
-          "Cybersecurity portfolio: VAPT with Nmap and Metasploit, AWS infrastructure, homomorphic encryption, CGPA 4.93 Computer Science undergraduate.",
-      },
-    ],
-  }),
+  head: () =>
+    pageHead(
+      "/",
+      "Alamu Joseph — Security Engineer & Cloud Engineer",
+      "Alamu Joseph is a security engineer and cloud engineer. Penetration testing, AWS infrastructure, applied cryptography, and an AI terminal you can interrogate.",
+    ),
   component: Index,
 });
 

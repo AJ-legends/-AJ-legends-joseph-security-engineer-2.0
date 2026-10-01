@@ -12,3 +12,5 @@ Allow: /
 
 User-agent: *
 Allow: /
+
+Sitemap: https://joseph-se-portfolio.vercel.app/sitemap.xml

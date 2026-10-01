@@ -3,23 +3,15 @@ import { useState } from "react";
 
 import { Page } from "@/components/Page";
 import { profile } from "@/lib/profile";
+import { pageHead } from "@/lib/site";
 
 export const Route = createFileRoute("/contact")({
-  head: () => ({
-    meta: [
-      { title: "Contact — Alamu Joseph" },
-      {
-        name: "description",
-        content:
-          "Get in touch with Alamu Joseph about cybersecurity internships, junior analyst roles, or collaboration on security tooling.",
-      },
-      { property: "og:title", content: "Contact — Alamu Joseph" },
-      {
-        property: "og:description",
-        content: "Reach Alamu Joseph by email, phone or LinkedIn.",
-      },
-    ],
-  }),
+  head: () =>
+    pageHead(
+      "/contact",
+      "Contact — Alamu Joseph",
+      "Get in touch with Alamu Joseph about cybersecurity internships, junior analyst roles, or collaboration on security tooling.",
+    ),
   component: Contact,
 });
 
