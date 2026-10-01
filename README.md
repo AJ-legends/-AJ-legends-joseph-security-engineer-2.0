@@ -23,25 +23,25 @@ The site combines a recruiter-friendly resume presentation with a terminal-inspi
 - Vite and Nitro
 - Tailwind CSS 4
 - Lucide React
-- Bun lockfile for reproducible installs
+- npm lockfile for reproducible installs
 
 ## Local Development
 
 ### Requirements
 
 - Node.js 20 or newer
-- Bun 1.4 or newer is recommended because the repository includes `bun.lock`
+- npm 10 or newer
 
 ### Install
 
 ```bash
-bun install
+npm ci
 ```
 
 ### Start the development server
 
 ```bash
-bun run dev
+npm run dev
 ```
 
 The app runs at `http://127.0.0.1:3000` unless the Vite configuration selects another available port.
@@ -49,19 +49,19 @@ The app runs at `http://127.0.0.1:3000` unless the Vite configuration selects an
 ### Build for production
 
 ```bash
-bun run build
+npm run build
 ```
 
 ### Preview the production build
 
 ```bash
-bun run preview
+npm run preview
 ```
 
 ### Lint
 
 ```bash
-bun run lint
+npm run lint
 ```
 
 ## Project Structure
@@ -110,7 +110,7 @@ If the key is missing, the rest of the portfolio remains available and the AI te
 
 ## Deployment
 
-The project can be deployed to a platform that supports the TanStack Start build output. For Vercel, configure the project build command as `bun run build` and use the generated production output according to the selected TanStack/Vercel deployment setup.
+The project can be deployed to a platform that supports the TanStack Start build output. For Vercel, configure the install command as `npm ci` and the build command as `npm run build`.
 
 Before launch, configure:
 
