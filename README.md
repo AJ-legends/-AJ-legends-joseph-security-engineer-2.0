@@ -70,7 +70,7 @@ npm run lint
 src/
 ├── components/       Shared layout, navigation, footer, terminal, and UI components
 ├── lib/profile.ts    Central resume and portfolio content model
-├── routes/           TanStack file-based routes and the chat endpoint
+├── routes/           TanStack file-based routes plus chat and contact endpoints
 ├── assets/           Source images and local assets
 └── styles.css        Theme tokens, typography, utilities, and global styles
 public/
@@ -81,14 +81,14 @@ public/
 
 ## Routes
 
-| Route | Purpose |
-| --- | --- |
-| `/` | Portfolio introduction and terminal preview |
-| `/about` | Background, focus areas, and skills |
-| `/work` | Experience, education, leadership, and certifications |
-| `/projects` | Security and engineering projects |
-| `/terminal` | Interactive SENTRY terminal |
-| `/contact` | Contact details and enquiry form |
+| Route       | Purpose                                               |
+| ----------- | ----------------------------------------------------- |
+| `/`         | Portfolio introduction and terminal preview           |
+| `/about`    | Background, focus areas, and skills                   |
+| `/work`     | Experience, education, leadership, and certifications |
+| `/projects` | Security and engineering projects                     |
+| `/terminal` | Interactive SENTRY terminal                           |
+| `/contact`  | Contact details and enquiry form                      |
 
 ## Content Updates
 
@@ -108,6 +108,18 @@ The `/terminal` route uses the server endpoint at `/api/chat`. Configure the ser
 
 If the key is missing, the rest of the portfolio remains available and the AI terminal reports that it is not configured.
 
+## Contact Form
+
+The contact form submits to the server endpoint at `/api/contact` and sends mail through the [Resend Email API](https://resend.com/docs/api-reference/emails/send-email). Configure these server-only environment variables in Vercel:
+
+```bash
+EMAIL_API_KEY=your_resend_api_key
+CONTACT_TO_EMAIL=your_inbox@example.com
+CONTACT_FROM_EMAIL="Alamu Joseph Portfolio <contact@your-verified-domain.com>"
+```
+
+`CONTACT_FROM_EMAIL` must use a domain verified in Resend. The endpoint validates fields, includes a honeypot and minimum-completion-time check, limits message size, and applies a basic per-instance IP rate limit.
+
 ## Deployment
 
 The project can be deployed to a platform that supports the TanStack Start build output. For Vercel, configure the install command as `npm ci` and the build command as `npm run build`.
@@ -116,7 +128,6 @@ Before launch, configure:
 
 - A production domain
 - Environment variables for server-side integrations
-- A real contact submission provider or API endpoint
 - Canonical metadata, sitemap, and analytics if discoverability and usage measurement are priorities
 
 ## License

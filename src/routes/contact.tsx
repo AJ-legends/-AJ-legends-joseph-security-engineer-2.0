@@ -24,18 +24,70 @@ const DETAILS = [
 ];
 
 function Contact() {
-  const [sent, setSent] = useState(false);
-  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [status, setStatus] = useState<
+    "idle" | "sending" | "sent" | "validation-error" | "rate-limited" | "delivery-failed"
+  >("idle");
+  const [message, setMessage] = useState("");
+  const [form, setForm] = useState({ name: "", email: "", message: "", website: "" });
+  const [startedAt, setStartedAt] = useState(() => Date.now());
 
   const field =
     "w-full rounded-[10px] border border-border bg-card px-3 py-2.5 font-mono text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-primary";
 
-  const submit = (e: React.FormEvent) => {
+  const updateField = (field: keyof typeof form, value: string) => {
+    setForm((current) => ({ ...current, [field]: value }));
+    if (status !== "idle") setStatus("idle");
+  };
+
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`Portfolio enquiry from ${form.name || "a visitor"}`);
-    const body = encodeURIComponent(`${form.message}\n\n— ${form.name} (${form.email})`);
-    window.location.href = `mailto:${profile.email}?subject=${subject}&body=${body}`;
-    setSent(true);
+    const name = form.name.trim();
+    const email = form.email.trim();
+    const formMessage = form.message.trim();
+
+    if (name.length < 2 || !/^\S+@\S+\.\S+$/.test(email) || formMessage.length < 10) {
+      setMessage(
+        "Enter your name, a valid email address, and a message of at least 10 characters.",
+      );
+      setStatus("validation-error");
+      return;
+    }
+
+    setStatus("sending");
+    setMessage("");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...form, startedAt }),
+      });
+      const payload = (await response.json().catch(() => null)) as {
+        error?: { message?: string };
+      } | null;
+
+      if (response.status === 429) {
+        setMessage(payload?.error?.message ?? "Too many messages. Please try again later.");
+        setStatus("rate-limited");
+        return;
+      }
+      if (!response.ok) {
+        setMessage(
+          payload?.error?.message ??
+            "Your message could not be delivered. Please try again shortly.",
+        );
+        setStatus("delivery-failed");
+        return;
+      }
+
+      setForm({ name: "", email: "", message: "", website: "" });
+      setStartedAt(Date.now());
+      setMessage("Message transmitted. Joseph will get back to you soon.");
+      setStatus("sent");
+    } catch {
+      setMessage("Your message could not be delivered. Please try again shortly.");
+      setStatus("delivery-failed");
+    }
   };
 
   return (
@@ -69,16 +121,17 @@ function Contact() {
           </dl>
         </div>
 
-        <form onSubmit={submit} className="space-y-4">
+        <form onSubmit={submit} className="space-y-4" noValidate>
           <div>
             <label htmlFor="name" className="label-mono mb-1.5 block">
               name
             </label>
             <input
               id="name"
-              required
               value={form.name}
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
+              onChange={(e) => updateField("name", e.target.value)}
+              minLength={2}
+              maxLength={100}
               className={field}
               placeholder="jane doe"
             />
@@ -90,9 +143,9 @@ function Contact() {
             <input
               id="email"
               type="email"
-              required
               value={form.email}
-              onChange={(e) => setForm({ ...form, email: e.target.value })}
+              onChange={(e) => updateField("email", e.target.value)}
+              maxLength={254}
               className={field}
               placeholder="jane@company.com"
             />
@@ -103,23 +156,42 @@ function Contact() {
             </label>
             <textarea
               id="message"
-              required
               rows={6}
               value={form.message}
-              onChange={(e) => setForm({ ...form, message: e.target.value })}
+              onChange={(e) => updateField("message", e.target.value)}
+              minLength={10}
+              maxLength={5_000}
               className={field}
               placeholder="what are you building?"
             />
           </div>
+          <div
+            className="pointer-events-none absolute size-px overflow-hidden opacity-0"
+            aria-hidden="true"
+          >
+            <label htmlFor="website">website</label>
+            <input
+              id="website"
+              name="website"
+              tabIndex={-1}
+              autoComplete="off"
+              value={form.website}
+              onChange={(e) => updateField("website", e.target.value)}
+            />
+          </div>
           <button
             type="submit"
+            disabled={status === "sending"}
             className="w-full rounded-[10px] bg-primary px-5 py-3 text-xs uppercase tracking-[0.18em] text-primary-foreground transition-opacity hover:opacity-80"
           >
-            transmit
+            {status === "sending" ? "transmitting..." : "transmit"}
           </button>
-          {sent && (
-            <p className="text-xs text-primary">
-              [+] draft opened in your mail client — hit send to deliver.
+          {status !== "idle" && status !== "sending" && (
+            <p
+              role={status === "sent" ? "status" : "alert"}
+              className={`text-xs ${status === "sent" ? "text-primary" : "text-destructive"}`}
+            >
+              [{status === "sent" ? "+" : "!"}] {message}
             </p>
           )}
         </form>
