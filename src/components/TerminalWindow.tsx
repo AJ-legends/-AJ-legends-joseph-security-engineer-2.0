@@ -2,22 +2,52 @@ import { useEffect, useRef, useState } from "react";
 
 type Line = { prompt?: string; text: string };
 
-const SCRIPT: Line[] = [
+const INTRO_SCRIPT: Line[] = [
   { prompt: "$", text: "whoami" },
   { text: "alamu_joseph" },
   { prompt: "$", text: "cat role.txt" },
   { text: "Security Engineer, Pentester" },
-  { prompt: "$", text: "./init_portfolio.sh" },
-  { text: "Ready." },
+];
+
+const LIVE_ACTIVITY: Line[][] = [
+  [
+    { prompt: "$", text: "browser-lab audit --target demo-session --check csp" },
+    { text: "[simulated] Content-Security-Policy verified." },
+  ],
+  [
+    { prompt: "$", text: "browser-lab inspect --target demo-session --cookies" },
+    { text: "[simulated] Secure and HttpOnly flags present." },
+  ],
+  [
+    { prompt: "$", text: "browser-lab probe --target demo-session --mode passive" },
+    { text: "[simulated] Surface scan complete: no live browser access." },
+  ],
+  [
+    { prompt: "$", text: "browser-lab headers --target demo-session" },
+    { text: "[simulated] HSTS, X-Frame-Options, and CSP checked." },
+  ],
+  [
+    { prompt: "$", text: "browser-lab report --target demo-session" },
+    { text: "[simulated] Lab telemetry recorded." },
+  ],
 ];
 
 const TYPE_MS = 45;
 const LINE_PAUSE = 420;
 const LOOP_PAUSE = 3200;
 
+function createScript() {
+  const activity = [...LIVE_ACTIVITY]
+    .sort(() => Math.random() - 0.5)
+    .slice(0, 3)
+    .flat();
+  return [...INTRO_SCRIPT, ...activity];
+}
+
 export function TerminalWindow() {
   const [lineIndex, setLineIndex] = useState(0);
   const [charCount, setCharCount] = useState(0);
+  const [script, setScript] = useState(createScript);
   const timer = useRef<number | null>(null);
 
   useEffect(() => {
@@ -26,12 +56,13 @@ export function TerminalWindow() {
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     if (reduced) {
-      setLineIndex(SCRIPT.length);
+      setLineIndex(script.length);
       return;
     }
 
-    if (lineIndex >= SCRIPT.length) {
+    if (lineIndex >= script.length) {
       timer.current = window.setTimeout(() => {
+        setScript(createScript());
         setLineIndex(0);
         setCharCount(0);
       }, LOOP_PAUSE);
@@ -40,7 +71,7 @@ export function TerminalWindow() {
       };
     }
 
-    const current = SCRIPT[lineIndex];
+    const current = script[lineIndex];
     const isCommand = Boolean(current.prompt);
 
     if (charCount < current.text.length) {
@@ -58,10 +89,10 @@ export function TerminalWindow() {
     return () => {
       if (timer.current) window.clearTimeout(timer.current);
     };
-  }, [lineIndex, charCount]);
+  }, [lineIndex, charCount, script]);
 
-  const rendered = SCRIPT.slice(0, lineIndex);
-  const active = lineIndex < SCRIPT.length ? SCRIPT[lineIndex] : null;
+  const rendered = script.slice(0, lineIndex);
+  const active = lineIndex < script.length ? script[lineIndex] : null;
 
   return (
     <div className="w-full overflow-hidden rounded-[14px] border border-border bg-terminal shadow-[0_18px_40px_-24px_rgba(0,0,0,0.55)]">
@@ -69,7 +100,7 @@ export function TerminalWindow() {
         <span className="size-2.5 rounded-full bg-[#ff5f57]" />
         <span className="size-2.5 rounded-full bg-[#febc2e]" />
         <span className="size-2.5 rounded-full bg-[#28c840]" />
-        <span className="ml-3 font-mono text-[11px] text-terminal-muted">zsh</span>
+        <span className="ml-3 font-mono text-[11px] text-terminal-muted">zsh · lab mode</span>
       </div>
 
       <div className="min-h-[220px] space-y-2.5 p-5 font-mono text-[13px] leading-relaxed">
