@@ -19,6 +19,7 @@ function DetailRow({
   href?: string;
 }) {
   const [copied, setCopied] = useState(false);
+  const isEmail = label === "EMAIL";
 
   const copy = async () => {
     try {
@@ -38,14 +39,25 @@ function DetailRow({
       <div className="min-w-0 flex-1">
         <div className="label-mono text-[10px]">{label}</div>
         {href ? (
-          <a
-            href={href}
-            target={href.startsWith("http") ? "_blank" : undefined}
-            rel="noreferrer"
-            className="block truncate text-[13px] text-foreground transition-colors hover:text-primary"
-          >
-            {value}
-          </a>
+          isEmail ? (
+            <div className="sidebar-email-window">
+              <a
+                href={href}
+                className="sidebar-email-scroll text-[13px] text-foreground transition-colors hover:text-primary"
+              >
+                {value}
+              </a>
+            </div>
+          ) : (
+            <a
+              href={href}
+              target={href.startsWith("http") ? "_blank" : undefined}
+              rel="noreferrer"
+              className="block whitespace-nowrap text-[12px] tracking-[-0.06em] text-foreground transition-colors hover:text-primary"
+            >
+              {value}
+            </a>
+          )
         ) : (
           <span className="block truncate text-[13px] text-foreground">{value}</span>
         )}
@@ -92,13 +104,21 @@ export function ProfileCard() {
 
         <h2 className="headline mt-5 text-3xl">Alamu Joseph</h2>
         <span
-          className={`mt-3 rounded-full px-3 py-1 text-[11px] transition-colors duration-500 ${
+          className={`profile-role mt-3 ${isCloud ? "is-cloud" : ""} ${
             isCloud
               ? "bg-foreground text-background"
               : "border border-chip-border bg-chip text-chip-foreground"
           }`}
         >
-          {currentRole}
+          {profile.titles.map((role, index) => (
+            <span
+              key={role}
+              aria-hidden={index !== roleIndex}
+              className={`profile-role-label ${index === 0 ? "is-security" : "is-cloud"}`}
+            >
+              {role}
+            </span>
+          ))}
         </span>
       </div>
 
@@ -134,7 +154,7 @@ export function ProfileCard() {
 
 export function Sidebar() {
   return (
-    <aside className="fixed bottom-0 left-0 top-[61px] z-40 hidden w-[300px] overflow-y-auto p-5 lg:block">
+    <aside className="fixed bottom-0 left-0 top-[61px] z-40 hidden w-[300px] overflow-hidden border-r border-border p-5 lg:block">
       <ProfileCard />
     </aside>
   );
