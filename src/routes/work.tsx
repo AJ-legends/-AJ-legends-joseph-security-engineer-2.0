@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { ArrowDownToLine } from "lucide-react";
 
+import { CredlyBadges } from "@/components/CredlyBadges";
 import { Page } from "@/components/Page";
 import { profile } from "@/lib/profile";
 
@@ -56,7 +58,9 @@ function Work() {
                 <span className="label-mono">{item.period}</span>
               </div>
               <div className="mt-1 text-[13px] font-medium text-foreground">
-                <span className="soft-highlight">{item.role}</span>
+                <span className="inline-flex rounded-full bg-primary px-2.5 py-1 text-[11px] text-primary-foreground">
+                  {item.role}
+                </span>
               </div>
               <div className="label-mono mt-1">{item.place}</div>
               <ul className="mt-4 space-y-2.5">
@@ -77,21 +81,22 @@ function Work() {
       {/* Education */}
       <section className="mt-20">
         <SectionHeading index="02" title="Education" />
-        <div className="grid gap-4">
+        <div className="grid gap-3">
           {profile.education.map((item) => (
             <article
               key={item.school}
-              className="micro-card rounded-[14px] border border-border bg-card p-6"
+              className="micro-card rounded-[14px] border border-border bg-card p-4"
             >
               <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
                 <h3 className="display-serif text-xl">{item.school}</h3>
                 <span className="label-mono">{item.period}</span>
               </div>
               <div className="mt-1 text-[13px] font-medium text-foreground">
-                <span className="soft-highlight">{item.degree}</span>
+                <span className="inline-flex rounded-full bg-primary px-2.5 py-1 text-[11px] text-primary-foreground">
+                  {item.credential ?? item.degree}
+                </span>
               </div>
-              <div className="label-mono mt-1">{item.place}</div>
-              <div className="mt-4 grid gap-2 border-t border-border pt-4 sm:grid-cols-[auto_1fr] sm:gap-x-6">
+              <div className="mt-3 grid gap-2 border-t border-border pt-3 sm:grid-cols-[auto_1fr] sm:gap-x-4">
                 <span className="label-mono">{item.degree === "SSCE" ? "highlights" : "coursework"}</span>
                 <p className="text-[13px] leading-relaxed text-muted-foreground">{item.note}</p>
               </div>
@@ -114,7 +119,9 @@ function Work() {
                 <h3 className="text-[13px] font-medium leading-snug">{item.org}</h3>
               </div>
               <div className="mt-3 flex items-baseline justify-between gap-3">
-                <span className="chip-strong">{item.role}</span>
+                <span className="inline-flex rounded-full bg-primary px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.11em] text-primary-foreground">
+                  {item.role}
+                </span>
                 <span className="label-mono">{item.period}</span>
               </div>
               <p className="mt-3 text-[12px] leading-relaxed text-muted-foreground">{item.note}</p>
@@ -126,22 +133,31 @@ function Work() {
       {/* Certifications */}
       <section className="mt-20">
         <SectionHeading index="04" title="Certifications" />
-        <div className="grid gap-3 sm:grid-cols-2">
+        <div className="divide-y divide-border rounded-[14px] border border-border bg-card">
           {profile.certifications.map((cert) => (
-            <article
+            <a
               key={cert.name}
-              className="micro-card group rounded-[14px] border border-border bg-card p-5"
+              href={cert.file}
+              download={`${cert.name.replaceAll(/[^a-z0-9]+/gi, "-").toLowerCase()}.pdf`}
+              className="group relative flex items-center justify-between gap-4 px-4 py-3 pr-12 transition-colors hover:bg-primary hover:text-primary-foreground"
             >
-              <div className="flex items-start justify-between gap-3">
+              <div className="min-w-0">
                 <h3 className="text-[13px] font-medium leading-snug">{cert.name}</h3>
-                <span className="label-mono shrink-0 text-primary">{cert.year}</span>
+                <div className="label-mono mt-1 group-hover:text-primary-foreground/70">{cert.issuer}</div>
               </div>
-              <div className="label-mono mt-2">{cert.issuer}</div>
-              <p className="mt-3 border-t border-border pt-3 text-[12px] leading-relaxed text-muted-foreground">
-                {cert.note}
-              </p>
-            </article>
+              <span className="shrink-0 rounded-full bg-primary px-2 py-0.5 font-mono text-[10px] text-primary-foreground group-hover:bg-primary-foreground group-hover:text-primary">
+                {cert.year}
+              </span>
+              <ArrowDownToLine
+                aria-hidden
+                className="absolute right-3 top-2.5 size-3.5 text-muted-foreground transition-colors group-hover:text-primary-foreground"
+              />
+            </a>
           ))}
+        </div>
+        <div className="mt-5">
+          <div className="label-mono mb-3 text-primary">// credly badges</div>
+          <CredlyBadges />
         </div>
       </section>
     </Page>

@@ -190,6 +190,49 @@
   animation-play-state: paused;
 }
 
+.credly-marquee-viewport {
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+}
+
+.credly-marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 0.75rem;
+  padding: 0.25rem 0;
+  animation: tools-scroll-left 42s linear infinite;
+  will-change: transform;
+}
+
+.credly-marquee-track:hover {
+  animation-play-state: paused;
+}
+
+.credly-badge-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  width: 14rem;
+  min-height: 4.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.875rem;
+  background-color: var(--color-card);
+  padding: 0.65rem 0.8rem;
+  color: var(--color-muted-foreground);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1.4;
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease, color 180ms ease;
+}
+
+.credly-badge-item:hover {
+  z-index: 1;
+  transform: translateY(-2px);
+  border-color: var(--color-primary);
+  color: var(--color-foreground);
+  box-shadow: 0 8px 18px rgb(20 20 20 / 0.12);
+}
+
 .tool-marquee-item {
   display: inline-flex;
   align-items: center;
@@ -304,6 +347,10 @@
   }
 
   .tools-marquee-track {
+    animation: none;
+  }
+
+  .credly-marquee-track {
     animation: none;
   }
 }
