@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-
+import { ToolsMarquee } from "@/components/ToolsMarquee";
 import { Page } from "@/components/Page";
 import { SkillsRadar } from "@/components/SkillsRadar";
 import { pageHead } from "@/lib/site";
@@ -17,22 +17,22 @@ export const Route = createFileRoute("/about")({
 
 const DOMAINS = [
   {
-    title: "Cloud Security",
-    note: "Securing AWS workloads — IAM boundaries, network segmentation, hardened Linux hosts.",
+    title: "Platform Security",
+    note: "Securing cloud platforms, identities, networks, and workloads across modern infrastructure.",
   },
   {
-    title: "Application Security",
-    note: "Testing web and system applications for flaws, then writing the fix and the report.",
+    title: "Product Security",
+    note: "Assessing web and mobile applications for vulnerabilities and delivering practical remediation guidance.",
   },
   {
     title: "AI Security",
-    note: "Researching how AI systems fail and how to use them safely inside security workflows.",
+    note: "Securing LLM implementations and applying AI-powered solutions to security operations.",
   },
 ];
 
 const NOW = [
-  "Finishing my B.Sc. in Computer Science at Covenant University (graduating 2026).",
-  "Running VAPT in lab environments with Nmap, Metasploit and Burp Suite.",
+  "Completed a B.Sc. in Computer Science at Covenant University.",
+  "Building skills through hands-on labs on TryHackMe and Hack The Box.",
   "Building proficiency across cloud security and AI security.",
   "Open to cybersecurity internships and junior analyst roles.",
 ];
@@ -41,13 +41,14 @@ function About() {
   return (
     <Page index="02" title="About" kicker="cat ./whoami.txt">
       <p className="quote-serif text-2xl leading-snug">
-        I&apos;m Joseph — a final-year Computer Science student who spends most of his time between
-        lecture notes, lab VMs, and trying to break things before someone else does.
+        I&apos;m Joseph, a recent Computer Science graduate focused on cybersecurity. I&apos;m passionate
+        about technology and its potential to help people.
       </p>
 
       <p className="mt-6 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-        Security engineer working across offensive and defensive work: assessments in the lab,
-        hardening in production, and Python for everything repetitive.
+        Security engineer working across offensive and defensive operations: securing the software
+        development lifecycle, conducting vulnerability assessments, strengthening organizational
+        security posture, and maximizing shareholder value.
       </p>
 
       <section className="mt-12">
@@ -86,6 +87,11 @@ function About() {
       <section className="mt-14">
         <h2 className="label-mono mb-4 text-primary">// skills</h2>
         <SkillsRadar />
+      </section>
+
+      <section className="mt-14">
+        <h2 className="label-mono mb-4 text-primary">// tools</h2>
+        <ToolsMarquee />
       </section>
     </Page>
   );
