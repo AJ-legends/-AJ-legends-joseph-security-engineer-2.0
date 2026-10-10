@@ -11,12 +11,12 @@ import {
 import { useEffect, useState, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
-import { reportLovableError } from "../lib/lovable-error-reporting";
 import { BootSequence, shouldPlayBoot } from "@/components/BootSequence";
 import { Sidebar } from "@/components/Sidebar";
 import { TopNav } from "@/components/TopNav";
 import { ScrollChain } from "@/components/ScrollChain";
 import { MobileFooter } from "@/components/MobileFooter";
+import { absoluteUrl, personStructuredData, siteConfig } from "@/lib/site";
 
 function NotFoundComponent() {
   return (
@@ -43,9 +43,6 @@ function NotFoundComponent() {
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   console.error(error);
   const router = useRouter();
-  useEffect(() => {
-    reportLovableError(error, { boundary: "tanstack_root_error_component" });
-  }, [error]);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -83,21 +80,34 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Alamu Joseph — Security Engineer" },
+      { title: siteConfig.title },
       {
         name: "description",
-        content:
-          "Portfolio of Alamu Joseph, security engineer and Python developer building offensive and defensive security tooling.",
+        content: siteConfig.description,
       },
-      { name: "author", content: "Alamu Joseph" },
-      { property: "og:title", content: "Alamu Joseph — Security Engineer" },
+      { name: "author", content: siteConfig.name },
+      { property: "og:title", content: siteConfig.title },
       {
         property: "og:description",
         content:
           "Attack. Defend. Automate. Security tooling, certifications and an AI terminal you can query.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:site_name", content: siteConfig.name },
+      { property: "og:image", content: absoluteUrl(siteConfig.socialImage) },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      {
+        property: "og:image:alt",
+        content: "Alamu Joseph, Security Engineer and Cloud Engineer — Attack. Defend. Automate.",
+      },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: absoluteUrl(siteConfig.socialImage) },
+      {
+        name: "twitter:image:alt",
+        content: "Alamu Joseph, Security Engineer and Cloud Engineer — Attack. Defend. Automate.",
+      },
+      { "script:ld+json": personStructuredData },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
