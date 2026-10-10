@@ -12,23 +12,31 @@ const INTRO_SCRIPT: Line[] = [
 const LIVE_ACTIVITY: Line[][] = [
   [
     { prompt: "$", text: "browser-lab audit --target demo-session --check csp" },
-    { text: "[simulated] Content-Security-Policy verified." },
+    { text: "policy: default-src 'self' · report-only: disabled" },
   ],
   [
     { prompt: "$", text: "browser-lab inspect --target demo-session --cookies" },
-    { text: "[simulated] Secure and HttpOnly flags present." },
+    { text: "cookie audit: Secure · HttpOnly · SameSite=Lax" },
   ],
   [
     { prompt: "$", text: "browser-lab probe --target demo-session --mode passive" },
-    { text: "[simulated] Surface scan complete: no live browser access." },
+    { text: "passive scan: 14 endpoints mapped · 0 critical findings" },
   ],
   [
     { prompt: "$", text: "browser-lab headers --target demo-session" },
-    { text: "[simulated] HSTS, X-Frame-Options, and CSP checked." },
+    { text: "headers: HSTS · X-Frame-Options · CSP · Referrer-Policy" },
   ],
   [
     { prompt: "$", text: "browser-lab report --target demo-session" },
-    { text: "[simulated] Lab telemetry recorded." },
+    { text: "telemetry: report queued · severity: informational" },
+  ],
+  [
+    { prompt: "$", text: "browser-lab verify --target demo-session --auth" },
+    { text: "session controls: token rotation · idle timeout: enabled" },
+  ],
+  [
+    { prompt: "$", text: "browser-lab routes --target demo-session" },
+    { text: "route map: /about · /work · /projects · /terminal · /contact" },
   ],
 ];
 
@@ -37,18 +45,26 @@ const LINE_PAUSE = 420;
 const LOOP_PAUSE = 3200;
 
 function createScript() {
-  const activity = [...LIVE_ACTIVITY]
-    .sort(() => Math.random() - 0.5)
-    .slice(0, 3)
-    .flat();
-  return [...INTRO_SCRIPT, ...activity];
+  const activity = [...LIVE_ACTIVITY];
+
+  for (let index = activity.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    [activity[index], activity[swapIndex]] = [activity[swapIndex], activity[index]];
+  }
+
+  const selectedActivity = activity.slice(0, 3).flat();
+  return [...INTRO_SCRIPT, ...selectedActivity];
 }
 
 export function TerminalWindow() {
   const [lineIndex, setLineIndex] = useState(0);
   const [charCount, setCharCount] = useState(0);
-  const [script, setScript] = useState(createScript);
+  const [script, setScript] = useState(INTRO_SCRIPT);
   const timer = useRef<number | null>(null);
+
+  useEffect(() => {
+    setScript(createScript());
+  }, []);
 
   useEffect(() => {
     const reduced =
@@ -100,7 +116,7 @@ export function TerminalWindow() {
         <span className="size-2.5 rounded-full bg-[#ff5f57]" />
         <span className="size-2.5 rounded-full bg-[#febc2e]" />
         <span className="size-2.5 rounded-full bg-[#28c840]" />
-        <span className="ml-3 font-mono text-[11px] text-terminal-muted">zsh · lab mode</span>
+        <span className="ml-3 font-mono text-[11px] text-terminal-muted">zsh · security lab</span>
       </div>
 
       <div className="min-h-[220px] space-y-2.5 p-5 font-mono text-[13px] leading-relaxed">
