@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Check, Copy, Github, Linkedin, Mail, MapPin, Phone } from "lucide-react";
 
@@ -6,6 +6,21 @@ import avatar from "@/assets/hacker-avatar.png";
 import { profile } from "@/lib/profile";
 
 const ROLE_INTERVAL_MS = 5000;
+
+const AVATARS_BY_ROUTE = {
+  "/about": {
+    src: "/Joseph_pics/1.png",
+    animation: "down",
+  },
+  "/terminal": {
+    src: "/Joseph_pics/4.png",
+    animation: "in",
+  },
+  "/contact": {
+    src: "/Joseph_pics/5.png",
+    animation: "up",
+  },
+} as const;
 
 function DetailRow({
   icon: Icon,
@@ -75,6 +90,7 @@ function DetailRow({
 
 export function ProfileCard() {
   const [roleIndex, setRoleIndex] = useState(0);
+  const pathname = useRouterState({ select: (state) => state.location.pathname });
 
   useEffect(() => {
     const id = window.setInterval(() => {
@@ -85,6 +101,9 @@ export function ProfileCard() {
 
   const currentRole = profile.titles[roleIndex];
   const isCloud = currentRole === "Cloud Engineer";
+  const routeAvatar = AVATARS_BY_ROUTE[pathname as keyof typeof AVATARS_BY_ROUTE];
+  const avatarSource = routeAvatar?.src ?? avatar;
+  const avatarAnimation = routeAvatar?.animation ?? "in";
 
   return (
     <div className="rounded-[22px] border border-border bg-card p-6">
@@ -92,11 +111,12 @@ export function ProfileCard() {
         <div className="relative">
           <Link to="/" className="block">
             <img
-              src={avatar}
-              alt="Hooded terminal glyph avatar for Alamu Joseph"
+              key={avatarSource}
+              src={avatarSource}
+              alt={routeAvatar ? "Portrait of Alamu Joseph" : "Hooded terminal glyph avatar for Alamu Joseph"}
               width={816}
               height={816}
-              className="size-28 rounded-[18px] bg-surface object-cover"
+              className={`sidebar-avatar sidebar-avatar-${avatarAnimation} size-28 rounded-[18px] bg-surface object-cover`}
             />
           </Link>
           <span className="absolute -bottom-1 -right-1 size-3.5 rounded-full border-2 border-card bg-primary" />
