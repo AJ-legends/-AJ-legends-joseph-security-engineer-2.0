@@ -284,6 +284,57 @@
   transition: background-color 500ms, color 500ms, border-color 500ms;
 }
 
+.sidebar-avatar {
+  animation-duration: 440ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  animation-fill-mode: both;
+}
+
+.sidebar-avatar-down {
+  animation-name: sidebar-avatar-slide-down;
+}
+
+.sidebar-avatar-in {
+  animation-name: sidebar-avatar-slide-in;
+}
+
+.sidebar-avatar-up {
+  animation-name: sidebar-avatar-slide-up;
+}
+
+@keyframes sidebar-avatar-slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-1rem) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes sidebar-avatar-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(1rem) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes sidebar-avatar-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(1rem) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 .profile-role-label {
   position: absolute;
   inset: 0;
