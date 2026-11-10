@@ -1,4 +1,4 @@
-import { Link, createFileRoute } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { ArrowUpRight, Github } from "lucide-react";
 
 import { Page } from "@/components/Page";
@@ -52,13 +52,7 @@ function Projects() {
             </header>
 
             <div className="p-5">
-              {project.slug === "packora" ? (
-                <Link to="/projects/packora" className="group block rounded-[12px] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary">
-                  <ProjectContent project={project} />
-                </Link>
-              ) : (
-                <ProjectContent project={project} />
-              )}
+              <ProjectContent project={project} />
             </div>
           </article>
         ))}
@@ -86,9 +80,12 @@ function ProjectContent({ project }: { project: (typeof profile.projects)[number
               {project.slug === "packora" ? (
                 <>
                   <PackoraDemo />
-                  <span className="mt-4 inline-flex items-center gap-2 font-mono text-xs text-primary">
+                  <a
+                    href="/projects/packora"
+                    className="mt-4 inline-flex items-center gap-2 font-mono text-xs text-primary transition-opacity hover:opacity-70 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                  >
                     View project <ArrowUpRight className="size-3.5" />
-                  </span>
+                  </a>
                 </>
               ) : (
                 <pre className="mt-5 overflow-x-auto rounded-[12px] bg-terminal p-4 text-[11px] leading-relaxed text-terminal-muted">
