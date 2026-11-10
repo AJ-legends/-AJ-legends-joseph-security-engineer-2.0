@@ -1,6 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { Link, createFileRoute } from "@tanstack/react-router";
+import { ArrowUpRight, Github } from "lucide-react";
 
 import { Page } from "@/components/Page";
+import { PackoraDemo } from "@/components/PackoraDemo";
 import { profile } from "@/lib/profile";
 import { pageHead } from "@/lib/site";
 
@@ -9,7 +11,7 @@ export const Route = createFileRoute("/projects")({
     pageHead(
       "/projects",
       "Builds — Security Projects | Alamu Joseph",
-      "Security projects by Alamu Joseph: a homomorphically encrypted student information system, a Windows VM penetration test, a research keylogger, a Python firewall and a packet sniffer.",
+      "Security projects by Alamu Joseph: a homomorphically encrypted student information system, a Windows VM penetration test, a research keylogger, a Python firewall and Packora, a terminal packet analyzer.",
     ),
   component: Projects,
 });
@@ -31,12 +33,43 @@ function Projects() {
               <span className="truncate font-mono text-[11px] text-muted-foreground">
                 {project.cmd}
               </span>
-              <span className="ml-auto text-[10px] text-muted-foreground">
+              <span className={project.slug === "packora" ? "ml-auto mr-3 text-[10px] text-muted-foreground" : "ml-auto text-[10px] text-muted-foreground"}>
                 {String(i + 1).padStart(2, "0")}
               </span>
+              {project.slug === "packora" && (
+                <a
+                  href="https://github.com/AJ-legends/packora"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1 text-[10px] text-muted-foreground transition-colors hover:text-primary"
+                  aria-label="Open Packora on GitHub"
+                  title="View Packora on GitHub"
+                >
+                  <Github className="size-3.5" />
+                  <ArrowUpRight className="size-3.5" />
+                </a>
+              )}
             </header>
 
             <div className="p-5">
+              {project.slug === "packora" ? (
+                <Link to="/projects/packora" className="group block rounded-[12px] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+                  <ProjectContent project={project} />
+                </Link>
+              ) : (
+                <ProjectContent project={project} />
+              )}
+            </div>
+          </article>
+        ))}
+      </div>
+    </Page>
+  );
+}
+
+function ProjectContent({ project }: { project: (typeof profile.projects)[number] }) {
+  return (
+    <>
               <h2 className="headline text-3xl">{project.name}</h2>
               <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
                 {project.description}
@@ -50,17 +83,22 @@ function Projects() {
                 ))}
               </ul>
 
-              <pre className="mt-5 overflow-x-auto rounded-[12px] bg-terminal p-4 text-[11px] leading-relaxed text-terminal-muted">
-                {project.log.map((line) => (
-                  <div key={line} className={line.startsWith("[!]") ? "text-warn" : line.startsWith("[+]") ? "text-terminal-accent" : undefined}>
-                    {line}
-                  </div>
-                ))}
-              </pre>
-            </div>
-          </article>
-        ))}
-      </div>
-    </Page>
+              {project.slug === "packora" ? (
+                <>
+                  <PackoraDemo />
+                  <span className="mt-4 inline-flex items-center gap-2 font-mono text-xs text-primary">
+                    View project <ArrowUpRight className="size-3.5" />
+                  </span>
+                </>
+              ) : (
+                <pre className="mt-5 overflow-x-auto rounded-[12px] bg-terminal p-4 text-[11px] leading-relaxed text-terminal-muted">
+                  {project.log.map((line) => (
+                    <div key={line} className={line.startsWith("[!]") ? "text-warn" : line.startsWith("[+]") ? "text-terminal-accent" : undefined}>
+                      {line}
+                    </div>
+                  ))}
+                </pre>
+              )}
+    </>
   );
 }

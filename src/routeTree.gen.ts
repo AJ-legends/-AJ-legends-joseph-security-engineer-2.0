@@ -19,6 +19,7 @@ import { Route as TerminalRouteImport } from './routes/terminal'
 import { Route as WorkRouteImport } from './routes/work'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
 import { Route as ApiContactRouteImport } from './routes/api/contact'
+import { Route as ProjectsPackoraRouteImport } from './routes/projects/packora'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -70,6 +71,11 @@ const ApiContactRoute = ApiContactRouteImport.update({
   path: '/api/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProjectsPackoraRoute = ProjectsPackoraRouteImport.update({
+  id: '/packora',
+  path: '/packora',
+  getParentRoute: () => ProjectsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -77,11 +83,12 @@ export interface FileRoutesByFullPath {
   '/certifications': typeof CertificationsRoute
   '/contact': typeof ContactRoute
   '/playground': typeof PlaygroundRoute
-  '/projects': typeof ProjectsRoute
+  '/projects': typeof ProjectsRouteWithChildren
   '/terminal': typeof TerminalRoute
   '/work': typeof WorkRoute
   '/api/chat': typeof ApiChatRoute
   '/api/contact': typeof ApiContactRoute
+  '/projects/packora': typeof ProjectsPackoraRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -89,11 +96,12 @@ export interface FileRoutesByTo {
   '/certifications': typeof CertificationsRoute
   '/contact': typeof ContactRoute
   '/playground': typeof PlaygroundRoute
-  '/projects': typeof ProjectsRoute
+  '/projects': typeof ProjectsRouteWithChildren
   '/terminal': typeof TerminalRoute
   '/work': typeof WorkRoute
   '/api/chat': typeof ApiChatRoute
   '/api/contact': typeof ApiContactRoute
+  '/projects/packora': typeof ProjectsPackoraRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -102,11 +110,12 @@ export interface FileRoutesById {
   '/certifications': typeof CertificationsRoute
   '/contact': typeof ContactRoute
   '/playground': typeof PlaygroundRoute
-  '/projects': typeof ProjectsRoute
+  '/projects': typeof ProjectsRouteWithChildren
   '/terminal': typeof TerminalRoute
   '/work': typeof WorkRoute
   '/api/chat': typeof ApiChatRoute
   '/api/contact': typeof ApiContactRoute
+  '/projects/packora': typeof ProjectsPackoraRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -121,6 +130,7 @@ export interface FileRouteTypes {
     | '/work'
     | '/api/chat'
     | '/api/contact'
+    | '/projects/packora'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -133,6 +143,7 @@ export interface FileRouteTypes {
     | '/work'
     | '/api/chat'
     | '/api/contact'
+    | '/projects/packora'
   id:
     | '__root__'
     | '/'
@@ -145,6 +156,7 @@ export interface FileRouteTypes {
     | '/work'
     | '/api/chat'
     | '/api/contact'
+    | '/projects/packora'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -153,7 +165,7 @@ export interface RootRouteChildren {
   CertificationsRoute: typeof CertificationsRoute
   ContactRoute: typeof ContactRoute
   PlaygroundRoute: typeof PlaygroundRoute
-  ProjectsRoute: typeof ProjectsRoute
+  ProjectsRoute: typeof ProjectsRouteWithChildren
   TerminalRoute: typeof TerminalRoute
   WorkRoute: typeof WorkRoute
   ApiChatRoute: typeof ApiChatRoute
@@ -232,8 +244,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiContactRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/projects/packora': {
+      id: '/projects/packora'
+      path: '/packora'
+      fullPath: '/projects/packora'
+      preLoaderRoute: typeof ProjectsPackoraRouteImport
+      parentRoute: typeof ProjectsRoute
+    }
   }
 }
+
+interface ProjectsRouteChildren {
+  ProjectsPackoraRoute: typeof ProjectsPackoraRoute
+}
+
+const ProjectsRouteChildren: ProjectsRouteChildren = {
+  ProjectsPackoraRoute: ProjectsPackoraRoute,
+}
+
+const ProjectsRouteWithChildren = ProjectsRoute._addFileChildren(
+  ProjectsRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -241,7 +272,7 @@ const rootRouteChildren: RootRouteChildren = {
   CertificationsRoute: CertificationsRoute,
   ContactRoute: ContactRoute,
   PlaygroundRoute: PlaygroundRoute,
-  ProjectsRoute: ProjectsRoute,
+  ProjectsRoute: ProjectsRouteWithChildren,
   TerminalRoute: TerminalRoute,
   WorkRoute: WorkRoute,
   ApiChatRoute: ApiChatRoute,
