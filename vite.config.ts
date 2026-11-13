@@ -3,16 +3,29 @@ import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import viteReact from "@vitejs/plugin-react";
 import { nitro } from "nitro/vite";
 import { defineConfig } from "vite";
-import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
+  resolve: { tsconfigPaths: true },
   plugins: [
-    tsconfigPaths(),
-    tailwindcss(),
     tanstackStart({
       server: { entry: "server" },
+      prerender: {
+        enabled: true,
+        autoStaticPathsDiscovery: false,
+        crawlLinks: false,
+      },
+      pages: [
+        {
+          path: "/projects/packora",
+          prerender: {
+            enabled: true,
+            outputPath: "/projects/packora/index.html",
+          },
+        },
+      ],
     }),
-    viteReact(),
     nitro({ preset: "vercel" }),
+    viteReact(),
+    tailwindcss(),
   ],
 });

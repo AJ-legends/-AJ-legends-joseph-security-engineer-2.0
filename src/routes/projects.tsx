@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Outlet, useRouterState } from "@tanstack/react-router";
 import { ArrowUpRight, Github } from "lucide-react";
 
 import { Page } from "@/components/Page";
@@ -17,6 +17,12 @@ export const Route = createFileRoute("/projects")({
 });
 
 function Projects() {
+  const isPackoraRoute = useRouterState({
+    select: (state) => state.location.pathname === "/projects/packora",
+  });
+
+  if (isPackoraRoute) return <Outlet />;
+
   return (
     <Page index="04" title="Builds" kicker="ls ./projects">
       <p className="mb-10 max-w-2xl text-sm leading-relaxed text-muted-foreground">

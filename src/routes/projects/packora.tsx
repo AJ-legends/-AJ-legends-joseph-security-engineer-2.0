@@ -105,13 +105,37 @@ function PackoraProject() {
       </section>
 
       <section className="border-t border-border py-10">
-        <SectionTitle title="Terminal workflow" caption="The same command-line workflow used by the project." />
-        <pre className="overflow-x-auto rounded-[14px] bg-terminal p-5 text-[11px] leading-relaxed text-terminal-muted">
-          <span className="text-terminal-accent">$</span> packora --replay samples/demo.pcap --scan-threshold 3{"\n"}
-          <span className="text-terminal-accent">[+]</span> parsed TCP 10.0.0.12:51842 → 1.1.1.1:443 [TLS ClientHello]{"\n"}
-          <span className="text-warn">[!]</span> unanswered port scan — 3 probes from 10.0.0.44{"\n"}
-          <span>[i] 24 frames classified | parsed: 22 | unsupported: 2</span>
-        </pre>
+        <SectionTitle
+          title="Terminal workflow"
+          caption="A real run against Packora’s committed synthetic PCAP, using the CLI’s scan threshold and plain output mode."
+        />
+        <div className="overflow-hidden rounded-[14px] bg-terminal font-mono text-[11px] leading-relaxed text-terminal-muted">
+          <div className="border-b border-white/10 px-5 py-3">
+            <span className="text-terminal-accent">$</span> packora --replay samples/demo.pcap --scan-threshold 3 --no-tui
+          </div>
+          <div className="overflow-x-auto p-5">
+            <pre>{`time     outcome     protocol   source                  destination             details
+23:13:21 PARSED      TCP        10.99.0.10:60021         10.0.1.20:21            flags=S
+23:13:21 PARSED      TCP        10.99.0.10:60022         10.0.1.20:22            flags=S
+23:13:21 PARSED      TCP        10.99.0.10:60023         10.0.1.20:23            flags=S
+23:13:22 MALFORMED   NETWORK    -                       -                       truncated or malformed IPv4 packet
+23:13:22 UNSUPPORTED NETWORK    02:00:00:00:00:bb        02:00:00:00:00:aa       unknown ethertype 0x88b7
+
+Packora run summary
+mode       : replay
+target     : replay:samples\\demo.pcap
+detection  : enabled
+packets    : 24
+duration   : 0.70s
+
+Protocol mix: TCP 18 | DNS 2 | HTTP 2 | malformed 1 | unsupported 1`}</pre>
+            <div className="mt-4 space-y-1">
+              <p className="text-terminal-accent">Alerts (2)</p>
+              <p className="text-warn">[23:13:23] [MEDIUM] port_scan src=10.99.0.10 — 12 unanswered SYN probes to distinct ports within 60s</p>
+              <p className="text-warn">[23:13:23] [MEDIUM] port_scan src=10.99.0.11 — 3 unanswered SYN probes to distinct ports within 60s</p>
+            </div>
+          </div>
+        </div>
       </section>
     </Page>
   );
